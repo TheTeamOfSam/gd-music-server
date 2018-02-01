@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.ArtistMapper">
+  <resultMap id="BaseResultMap" type="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="artist_name" jdbcType="VARCHAR" property="artistName" />
+    <result column="artist_other_name" jdbcType="VARCHAR" property="artistOtherName" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="representative_works" jdbcType="VARCHAR" property="representativeWorks" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="artist_head_photo" jdbcType="VARCHAR" property="artistHeadPhoto" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, artist_name, artist_other_name, nationality, birthplace, profession, representative_works, 
+    intro, artist_head_photo, created_time, last_modified_time, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from artist
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from artist
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
+    insert into artist (id, artist_name, artist_other_name, 
+      nationality, birthplace, profession, 
+      representative_works, intro, artist_head_photo, 
+      created_time, last_modified_time, is_delete
+      )
+    values (#{id,jdbcType=BIGINT}, #{artistName,jdbcType=VARCHAR}, #{artistOtherName,jdbcType=VARCHAR}, 
+      #{nationality,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
+      #{representativeWorks,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{artistHeadPhoto,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
+    insert into artist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="artistName != null">
+        artist_name,
+      </if>
+      <if test="artistOtherName != null">
+        artist_other_name,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="birthplace != null">
+        birthplace,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="representativeWorks != null">
+        representative_works,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="artistHeadPhoto != null">
+        artist_head_photo,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="artistName != null">
+        #{artistName,jdbcType=VARCHAR},
+      </if>
+      <if test="artistOtherName != null">
+        #{artistOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="representativeWorks != null">
+        #{representativeWorks,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="artistHeadPhoto != null">
+        #{artistHeadPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedTime != null">
+        #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
+    update artist
+    <set>
+      <if test="artistName != null">
+        artist_name = #{artistName,jdbcType=VARCHAR},
+      </if>
+      <if test="artistOtherName != null">
+        artist_other_name = #{artistOtherName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        birthplace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="representativeWorks != null">
+        representative_works = #{representativeWorks,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="artistHeadPhoto != null">
+        artist_head_photo = #{artistHeadPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
+    update artist
+    set artist_name = #{artistName,jdbcType=VARCHAR},
+      artist_other_name = #{artistOtherName,jdbcType=VARCHAR},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
+      representative_works = #{representativeWorks,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      artist_head_photo = #{artistHeadPhoto,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

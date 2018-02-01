@@ -40,13 +40,94 @@
         </javaClientGenerator>
 
         <!-- 用户表 -->
-        <table schema="gd_music_server" tableName="user" domainObjectName="User"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+        <!--<table schema="gd_music_server" tableName="user" domainObjectName="User"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--艺人表-->
+        <!--<table schema="gd_music_server" tableName="artist" domainObjectName="Artist"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;点赞表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="like_comment" domainObjectName="LikeComment"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--历史听歌记录-->
+        <!--<table schema="gd_music_server" tableName="listen_history" domainObjectName="ListenHistory"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;歌曲表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="music" domainObjectName="Music"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;歌曲评论表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="music_comment" domainObjectName="MusicComment"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;用户歌单内歌曲表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="music_in_user_music_list" domainObjectName="MusicInUserMusicList"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;歌单收藏表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="music_list_collection" domainObjectName="MusicListCollection"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;专辑表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="special" domainObjectName="Special"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--&lt;!&ndash;用户歌单表&ndash;&gt;-->
+        <!--<table schema="gd_music_server" tableName="user_music_list" domainObjectName="UserMusicList"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.MusicMapper">
+  <resultMap id="BaseResultMap" type="com.sam.graduation.design.gdmusicserver.model.pojo.Music">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="music_name" jdbcType="VARCHAR" property="musicName" />
+    <result column="special_id" jdbcType="BIGINT" property="specialId" />
+    <result column="music_path" jdbcType="VARCHAR" property="musicPath" />
+    <result column="music_duration" jdbcType="INTEGER" property="musicDuration" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, music_name, special_id, music_path, music_duration, created_time, last_modified_time, 
+    is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from music
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from music
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Music">
+    insert into music (id, music_name, special_id, 
+      music_path, music_duration, created_time, 
+      last_modified_time, is_delete)
+    values (#{id,jdbcType=BIGINT}, #{musicName,jdbcType=VARCHAR}, #{specialId,jdbcType=BIGINT}, 
+      #{musicPath,jdbcType=VARCHAR}, #{musicDuration,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Music">
+    insert into music
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="musicName != null">
+        music_name,
+      </if>
+      <if test="specialId != null">
+        special_id,
+      </if>
+      <if test="musicPath != null">
+        music_path,
+      </if>
+      <if test="musicDuration != null">
+        music_duration,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="musicName != null">
+        #{musicName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialId != null">
+        #{specialId,jdbcType=BIGINT},
+      </if>
+      <if test="musicPath != null">
+        #{musicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="musicDuration != null">
+        #{musicDuration,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedTime != null">
+        #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Music">
+    update music
+    <set>
+      <if test="musicName != null">
+        music_name = #{musicName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialId != null">
+        special_id = #{specialId,jdbcType=BIGINT},
+      </if>
+      <if test="musicPath != null">
+        music_path = #{musicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="musicDuration != null">
+        music_duration = #{musicDuration,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Music">
+    update music
+    set music_name = #{musicName,jdbcType=VARCHAR},
+      special_id = #{specialId,jdbcType=BIGINT},
+      music_path = #{musicPath,jdbcType=VARCHAR},
+      music_duration = #{musicDuration,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
