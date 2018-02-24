@@ -20,6 +20,7 @@ public class EmailServiceImpl extends BaseService implements EmailService {
     @Override
     public EmailResponseDto sendEmailCode(String email) {
         EmailResponseDto dto = this.emailClient.sendEmailCode(email);
+        dto.setCode(null);
         return dto;
     }
 
