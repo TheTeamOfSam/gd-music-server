@@ -2,6 +2,7 @@ package com.sam.graduation.design.gdmusicserver.controller.email.test;
 
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.email.related.EmailResponseDto;
+import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
 import com.sam.graduation.design.gdmusicserver.service.email.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController extends BaseController {
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private EmailService emailService;
 
     @ApiOperation("邮箱feign获取测试接口")
@@ -28,6 +32,12 @@ public class EmailController extends BaseController {
     public EmailResponseDto getEmailCode(
             @RequestParam("email") String email
     ) {
+        if (this.userMapper.selectByEmail(email) != null) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setSuccess(false);
+            dto.setFeedbackMessage("亲，该邮箱已经被注册！");
+            return dto;
+        }
         return this.emailService.sendEmailCode(email);
     }
 

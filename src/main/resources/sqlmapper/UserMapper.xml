@@ -21,7 +21,7 @@
     head_photo, created_time, last_modified_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=BIGINT}
@@ -185,4 +185,16 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+    WHERE email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByEmailAndPassword" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.User"
+  resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+    WHERE email = #{email,jdbcType=VARCHAR}
+    AND password = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>
