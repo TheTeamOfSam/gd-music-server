@@ -88,4 +88,17 @@ public class UserServiceImpl extends BaseService implements UserService {
         userDto.from(user);
         return userDto;
     }
+
+    @Override
+    public UserDto userInfoGet(Long userID) {
+        UserDto userDto = null;
+        User user = this.userMapper.selectByPrimaryKey(userID);
+        if (user == null) {
+            return userDto;
+        }
+        userDto = new UserDto();
+        userDto.from(user);
+        userDto.setPassword(null);
+        return userDto;
+    }
 }

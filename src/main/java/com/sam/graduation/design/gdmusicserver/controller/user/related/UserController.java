@@ -133,4 +133,24 @@ public class UserController extends BaseController {
         return this.success(userDto);
     }
 
+    @ApiOperation("获取个人信息接口")
+    @RequestMapping(value = "/user/service/info/@get", method = RequestMethod.POST)
+    public Map<String, Object> userServiceInfoGet(
+            @RequestParam("uID") Long userID
+    ) {
+        if (userID < 0) {
+            return this.error("ID错误", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        UserDto userDto = null;
+        try {
+            userDto = this.userService.userInfoGet(userID);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userDto == null) {
+            return this.error("未获得用户信息！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(userDto);
+    }
+
 }

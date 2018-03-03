@@ -12,4 +12,6 @@ public interface UserService {
 
     UserDto userLogin(UserDto dto);
 
+    UserDto userInfoGet(Long userID);
+
 }
