@@ -6,16 +6,15 @@
     <result column="special_name" jdbcType="VARCHAR" property="specialName" />
     <result column="artist_id" jdbcType="BIGINT" property="artistId" />
     <result column="publish_company" jdbcType="VARCHAR" property="publishCompany" />
-    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="publish_time" jdbcType="DATE" property="publishTime" />
     <result column="special_photo" jdbcType="VARCHAR" property="specialPhoto" />
-    <result column="type" jdbcType="TINYINT" property="type" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, special_name, artist_id, publish_company, publish_time, special_photo, type, 
-    created_time, last_modified_time, is_delete
+    id, special_name, artist_id, publish_company, publish_time, special_photo, created_time, 
+    last_modified_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -30,12 +29,12 @@
   <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Special">
     insert into special (id, special_name, artist_id, 
       publish_company, publish_time, special_photo, 
-      type, created_time, last_modified_time, 
-      is_delete)
+      created_time, last_modified_time, is_delete
+      )
     values (#{id,jdbcType=BIGINT}, #{specialName,jdbcType=VARCHAR}, #{artistId,jdbcType=BIGINT}, 
-      #{publishCompany,jdbcType=VARCHAR}, #{publishTime,jdbcType=TIMESTAMP}, #{specialPhoto,jdbcType=VARCHAR}, 
-      #{type,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=TINYINT})
+      #{publishCompany,jdbcType=VARCHAR}, #{publishTime,jdbcType=DATE}, #{specialPhoto,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Special">
     insert into special
@@ -57,9 +56,6 @@
       </if>
       <if test="specialPhoto != null">
         special_photo,
-      </if>
-      <if test="type != null">
-        type,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -85,13 +81,10 @@
         #{publishCompany,jdbcType=VARCHAR},
       </if>
       <if test="publishTime != null">
-        #{publishTime,jdbcType=TIMESTAMP},
+        #{publishTime,jdbcType=DATE},
       </if>
       <if test="specialPhoto != null">
         #{specialPhoto,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -117,13 +110,10 @@
         publish_company = #{publishCompany,jdbcType=VARCHAR},
       </if>
       <if test="publishTime != null">
-        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+        publish_time = #{publishTime,jdbcType=DATE},
       </if>
       <if test="specialPhoto != null">
         special_photo = #{specialPhoto,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -142,9 +132,8 @@
     set special_name = #{specialName,jdbcType=VARCHAR},
       artist_id = #{artistId,jdbcType=BIGINT},
       publish_company = #{publishCompany,jdbcType=VARCHAR},
-      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=DATE},
       special_photo = #{specialPhoto,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}

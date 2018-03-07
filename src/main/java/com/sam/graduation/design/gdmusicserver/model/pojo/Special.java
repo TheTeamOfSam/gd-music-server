@@ -15,8 +15,6 @@ public class Special {
 
     private String specialPhoto;
 
-    private Byte type;
-
     private Date createdTime;
 
     private Date lastModifiedTime;
@@ -69,14 +67,6 @@ public class Special {
 
     public void setSpecialPhoto(String specialPhoto) {
         this.specialPhoto = specialPhoto == null ? null : specialPhoto.trim();
-    }
-
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
     }
 
     public Date getCreatedTime() {
