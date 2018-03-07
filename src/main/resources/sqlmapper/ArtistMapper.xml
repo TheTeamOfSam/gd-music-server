@@ -10,14 +10,16 @@
     <result column="profession" jdbcType="VARCHAR" property="profession" />
     <result column="representative_works" jdbcType="VARCHAR" property="representativeWorks" />
     <result column="intro" jdbcType="VARCHAR" property="intro" />
-    <result column="artist_head_photo" jdbcType="VARCHAR" property="artistHeadPhoto" />
+    <result column="artist_head_photo_big" jdbcType="VARCHAR" property="artistHeadPhotoBig" />
+    <result column="artist_head_photo_small" jdbcType="VARCHAR" property="artistHeadPhotoSmall" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
     id, artist_name, artist_other_name, nationality, birthplace, profession, representative_works, 
-    intro, artist_head_photo, created_time, last_modified_time, is_delete
+    intro, artist_head_photo_big, artist_head_photo_small, created_time, last_modified_time, 
+    is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -32,14 +34,14 @@
   <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
     insert into artist (id, artist_name, artist_other_name, 
       nationality, birthplace, profession, 
-      representative_works, intro, artist_head_photo, 
-      created_time, last_modified_time, is_delete
-      )
+      representative_works, intro, artist_head_photo_big, 
+      artist_head_photo_small, created_time, last_modified_time, 
+      is_delete)
     values (#{id,jdbcType=BIGINT}, #{artistName,jdbcType=VARCHAR}, #{artistOtherName,jdbcType=VARCHAR}, 
       #{nationality,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
-      #{representativeWorks,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{artistHeadPhoto,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}
-      )
+      #{representativeWorks,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{artistHeadPhotoBig,jdbcType=VARCHAR}, 
+      #{artistHeadPhotoSmall,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
     insert into artist
@@ -68,8 +70,11 @@
       <if test="intro != null">
         intro,
       </if>
-      <if test="artistHeadPhoto != null">
-        artist_head_photo,
+      <if test="artistHeadPhotoBig != null">
+        artist_head_photo_big,
+      </if>
+      <if test="artistHeadPhotoSmall != null">
+        artist_head_photo_small,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -106,8 +111,11 @@
       <if test="intro != null">
         #{intro,jdbcType=VARCHAR},
       </if>
-      <if test="artistHeadPhoto != null">
-        #{artistHeadPhoto,jdbcType=VARCHAR},
+      <if test="artistHeadPhotoBig != null">
+        #{artistHeadPhotoBig,jdbcType=VARCHAR},
+      </if>
+      <if test="artistHeadPhotoSmall != null">
+        #{artistHeadPhotoSmall,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -144,8 +152,11 @@
       <if test="intro != null">
         intro = #{intro,jdbcType=VARCHAR},
       </if>
-      <if test="artistHeadPhoto != null">
-        artist_head_photo = #{artistHeadPhoto,jdbcType=VARCHAR},
+      <if test="artistHeadPhotoBig != null">
+        artist_head_photo_big = #{artistHeadPhotoBig,jdbcType=VARCHAR},
+      </if>
+      <if test="artistHeadPhotoSmall != null">
+        artist_head_photo_small = #{artistHeadPhotoSmall,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -168,7 +179,8 @@
       profession = #{profession,jdbcType=VARCHAR},
       representative_works = #{representativeWorks,jdbcType=VARCHAR},
       intro = #{intro,jdbcType=VARCHAR},
-      artist_head_photo = #{artistHeadPhoto,jdbcType=VARCHAR},
+      artist_head_photo_big = #{artistHeadPhotoBig,jdbcType=VARCHAR},
+      artist_head_photo_small = #{artistHeadPhotoSmall,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       last_modified_time = #{lastModifiedTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}

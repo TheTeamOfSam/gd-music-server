@@ -48,7 +48,7 @@
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
 
-        <!--艺人表-->
+        <!--&lt;!&ndash;艺人表&ndash;&gt;-->
         <!--<table schema="gd_music_server" tableName="artist" domainObjectName="Artist"-->
                <!--enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->

@@ -19,7 +19,9 @@ public class Artist {
 
     private String intro;
 
-    private String artistHeadPhoto;
+    private String artistHeadPhotoBig;
+
+    private String artistHeadPhotoSmall;
 
     private Date createdTime;
 
@@ -91,12 +93,20 @@ public class Artist {
         this.intro = intro == null ? null : intro.trim();
     }
 
-    public String getArtistHeadPhoto() {
-        return artistHeadPhoto;
+    public String getArtistHeadPhotoBig() {
+        return artistHeadPhotoBig;
     }
 
-    public void setArtistHeadPhoto(String artistHeadPhoto) {
-        this.artistHeadPhoto = artistHeadPhoto == null ? null : artistHeadPhoto.trim();
+    public void setArtistHeadPhotoBig(String artistHeadPhotoBig) {
+        this.artistHeadPhotoBig = artistHeadPhotoBig == null ? null : artistHeadPhotoBig.trim();
+    }
+
+    public String getArtistHeadPhotoSmall() {
+        return artistHeadPhotoSmall;
+    }
+
+    public void setArtistHeadPhotoSmall(String artistHeadPhotoSmall) {
+        this.artistHeadPhotoSmall = artistHeadPhotoSmall == null ? null : artistHeadPhotoSmall.trim();
     }
 
     public Date getCreatedTime() {
