@@ -1,4 +1,4 @@
-package com.sam.graduation.design.gdmusicserver.controller.email.test;
+package com.sam.graduation.design.gdmusicserver.controller.email;
 
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.email.related.EmailResponseDto;
