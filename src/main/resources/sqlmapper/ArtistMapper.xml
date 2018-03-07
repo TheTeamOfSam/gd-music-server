@@ -5,10 +5,6 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="artist_name" jdbcType="VARCHAR" property="artistName" />
     <result column="artist_other_name" jdbcType="VARCHAR" property="artistOtherName" />
-    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
-    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
-    <result column="profession" jdbcType="VARCHAR" property="profession" />
-    <result column="representative_works" jdbcType="VARCHAR" property="representativeWorks" />
     <result column="intro" jdbcType="VARCHAR" property="intro" />
     <result column="artist_head_photo_big" jdbcType="VARCHAR" property="artistHeadPhotoBig" />
     <result column="artist_head_photo_small" jdbcType="VARCHAR" property="artistHeadPhotoSmall" />
@@ -17,9 +13,8 @@
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, artist_name, artist_other_name, nationality, birthplace, profession, representative_works, 
-    intro, artist_head_photo_big, artist_head_photo_small, created_time, last_modified_time, 
-    is_delete
+    id, artist_name, artist_other_name, intro, artist_head_photo_big, artist_head_photo_small, 
+    created_time, last_modified_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,15 +28,13 @@
   </delete>
   <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
     insert into artist (id, artist_name, artist_other_name, 
-      nationality, birthplace, profession, 
-      representative_works, intro, artist_head_photo_big, 
-      artist_head_photo_small, created_time, last_modified_time, 
-      is_delete)
+      intro, artist_head_photo_big, artist_head_photo_small, 
+      created_time, last_modified_time, is_delete
+      )
     values (#{id,jdbcType=BIGINT}, #{artistName,jdbcType=VARCHAR}, #{artistOtherName,jdbcType=VARCHAR}, 
-      #{nationality,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
-      #{representativeWorks,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{artistHeadPhotoBig,jdbcType=VARCHAR}, 
-      #{artistHeadPhotoSmall,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=TINYINT})
+      #{intro,jdbcType=VARCHAR}, #{artistHeadPhotoBig,jdbcType=VARCHAR}, #{artistHeadPhotoSmall,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.Artist">
     insert into artist
@@ -54,18 +47,6 @@
       </if>
       <if test="artistOtherName != null">
         artist_other_name,
-      </if>
-      <if test="nationality != null">
-        nationality,
-      </if>
-      <if test="birthplace != null">
-        birthplace,
-      </if>
-      <if test="profession != null">
-        profession,
-      </if>
-      <if test="representativeWorks != null">
-        representative_works,
       </if>
       <if test="intro != null">
         intro,
@@ -96,18 +77,6 @@
       <if test="artistOtherName != null">
         #{artistOtherName,jdbcType=VARCHAR},
       </if>
-      <if test="nationality != null">
-        #{nationality,jdbcType=VARCHAR},
-      </if>
-      <if test="birthplace != null">
-        #{birthplace,jdbcType=VARCHAR},
-      </if>
-      <if test="profession != null">
-        #{profession,jdbcType=VARCHAR},
-      </if>
-      <if test="representativeWorks != null">
-        #{representativeWorks,jdbcType=VARCHAR},
-      </if>
       <if test="intro != null">
         #{intro,jdbcType=VARCHAR},
       </if>
@@ -137,18 +106,6 @@
       <if test="artistOtherName != null">
         artist_other_name = #{artistOtherName,jdbcType=VARCHAR},
       </if>
-      <if test="nationality != null">
-        nationality = #{nationality,jdbcType=VARCHAR},
-      </if>
-      <if test="birthplace != null">
-        birthplace = #{birthplace,jdbcType=VARCHAR},
-      </if>
-      <if test="profession != null">
-        profession = #{profession,jdbcType=VARCHAR},
-      </if>
-      <if test="representativeWorks != null">
-        representative_works = #{representativeWorks,jdbcType=VARCHAR},
-      </if>
       <if test="intro != null">
         intro = #{intro,jdbcType=VARCHAR},
       </if>
@@ -174,10 +131,6 @@
     update artist
     set artist_name = #{artistName,jdbcType=VARCHAR},
       artist_other_name = #{artistOtherName,jdbcType=VARCHAR},
-      nationality = #{nationality,jdbcType=VARCHAR},
-      birthplace = #{birthplace,jdbcType=VARCHAR},
-      profession = #{profession,jdbcType=VARCHAR},
-      representative_works = #{representativeWorks,jdbcType=VARCHAR},
       intro = #{intro,jdbcType=VARCHAR},
       artist_head_photo_big = #{artistHeadPhotoBig,jdbcType=VARCHAR},
       artist_head_photo_small = #{artistHeadPhotoSmall,jdbcType=VARCHAR},
