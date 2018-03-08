@@ -5,7 +5,6 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="music_list_name" jdbcType="VARCHAR" property="musicListName" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="intro" jdbcType="VARCHAR" property="intro" />
     <result column="generate_time" jdbcType="TIMESTAMP" property="generateTime" />
     <result column="music_list_photo" jdbcType="VARCHAR" property="musicListPhoto" />
@@ -14,7 +13,7 @@
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, music_list_name, user_id, tag, intro, generate_time, music_list_photo, created_time, 
+    id, music_list_name, user_id, intro, generate_time, music_list_photo, created_time, 
     last_modified_time, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -29,13 +28,13 @@
   </delete>
   <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.UserMusicList">
     insert into user_music_list (id, music_list_name, user_id, 
-      tag, intro, generate_time, 
-      music_list_photo, created_time, last_modified_time, 
-      is_delete)
+      intro, generate_time, music_list_photo, 
+      created_time, last_modified_time, is_delete
+      )
     values (#{id,jdbcType=BIGINT}, #{musicListName,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
-      #{tag,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{generateTime,jdbcType=TIMESTAMP}, 
-      #{musicListPhoto,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=TINYINT})
+      #{intro,jdbcType=VARCHAR}, #{generateTime,jdbcType=TIMESTAMP}, #{musicListPhoto,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastModifiedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.UserMusicList">
     insert into user_music_list
@@ -48,9 +47,6 @@
       </if>
       <if test="userId != null">
         user_id,
-      </if>
-      <if test="tag != null">
-        tag,
       </if>
       <if test="intro != null">
         intro,
@@ -81,9 +77,6 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="tag != null">
-        #{tag,jdbcType=VARCHAR},
-      </if>
       <if test="intro != null">
         #{intro,jdbcType=VARCHAR},
       </if>
@@ -113,9 +106,6 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="tag != null">
-        tag = #{tag,jdbcType=VARCHAR},
-      </if>
       <if test="intro != null">
         intro = #{intro,jdbcType=VARCHAR},
       </if>
@@ -141,7 +131,6 @@
     update user_music_list
     set music_list_name = #{musicListName,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=BIGINT},
-      tag = #{tag,jdbcType=VARCHAR},
       intro = #{intro,jdbcType=VARCHAR},
       generate_time = #{generateTime,jdbcType=TIMESTAMP},
       music_list_photo = #{musicListPhoto,jdbcType=VARCHAR},

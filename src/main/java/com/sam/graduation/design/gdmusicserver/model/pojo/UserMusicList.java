@@ -9,8 +9,6 @@ public class UserMusicList {
 
     private Long userId;
 
-    private String tag;
-
     private String intro;
 
     private Date generateTime;
@@ -45,14 +43,6 @@ public class UserMusicList {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag == null ? null : tag.trim();
     }
 
     public String getIntro() {
