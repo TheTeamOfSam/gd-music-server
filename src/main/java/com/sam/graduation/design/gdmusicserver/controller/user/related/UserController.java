@@ -55,7 +55,6 @@ public class UserController extends BaseController {
         }
 
         MessageDto messageDto = null;
-
         try {
             messageDto = this.userService.userHeadPhotoUpdate(userID, headPhoto);
         } catch (Exception e) {
