@@ -1,5 +1,6 @@
 package com.sam.graduation.design.gdmusicserver.controller.user.related;
 
+import com.alibaba.fastjson.JSON;
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
@@ -182,6 +183,62 @@ public class UserController extends BaseController {
         }
         if (userDto == null) {
             return this.error("未获得用户信息！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(userDto);
+    }
+
+    @ApiOperation("个人基础信息修改接口")
+    @RequestMapping(value = "/user/service/basic/info/@change", method = RequestMethod.POST)
+    public Map<String, Object> userServiceBasicInfoChange(
+            @RequestParam("userId") Long userId,
+            @RequestParam("sex") int uGender,
+            @RequestParam("str_date_of_birth") String uDOfB,
+            @RequestParam("introduction") String uIntroduction,
+            @RequestParam("province") String uProvince,
+            @RequestParam("city") String uCity
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+            return this.error("亲，你的ID是空的", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(uDOfB)) {
+            return this.error("亲，请填写出生日期", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (!((uGender == 1) || (uGender == 2) || (uGender == 3))) {
+            return this.error("亲，请正确选择性别", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(uProvince)) {
+            return this.error("亲，请选择所在省", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(uCity)) {
+            return this.error("亲，请选择所在市", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+
+        UserDto dto = new UserDto();
+        dto.setId(userId);
+        // TODO: 强制转换日期格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateOfBirth = null;
+        try {
+            dateOfBirth = sdf.parse(uDOfB);
+        } catch (ParseException e) {
+            logger.error("e:{}", e);
+        }
+        if (dateOfBirth != null) {
+            dto.setDateOfBirth(dateOfBirth);
+        }
+        dto.setIntroduction(uIntroduction);
+        dto.setSex((byte) uGender);
+        dto.setProvince(uProvince);
+        dto.setCity(uCity);
+
+        UserDto userDto = null;
+        try {
+            userDto = this.userService.userBasicInfoUpdate(dto);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userDto== null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
         return this.success(userDto);
     }

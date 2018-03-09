@@ -129,6 +129,28 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
+    public UserDto userBasicInfoUpdate(UserDto dto) {
+        UserDto userDto = null;
+
+        User user = dto.to();
+        user.setId(dto.getId());
+        user.setLastModifiedTime(new Date());
+
+        int updateResult = 0;
+        try {
+            updateResult = this.userMapper.updateByPrimaryKeySelective(user);
+        } catch (Exception e) {
+            logger.error("e:{}!", e);
+        }
+        if (updateResult == 0) {
+            return userDto;
+        }
+        userDto = new UserDto();
+        userDto.from(user);
+        return userDto;
+    }
+
+    @Override
     public MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto) {
 
         BufferedImage bi = null;
@@ -190,6 +212,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         User userUpdate = new User();
         userUpdate.setId(userID);
         userUpdate.setHeadPhoto(hpRelPath);
+        userUpdate.setLastModifiedTime(new Date());
 
         int updateResult = 0;
         try {
