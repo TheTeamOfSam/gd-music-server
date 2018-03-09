@@ -36,7 +36,7 @@ public class EmailController extends BaseController {
         if (StringUtils.isBlank(email)) {
             EmailResponseDto dto = new EmailResponseDto();
             dto.setSuccess(false);
-            dto.setFeedbackMessage("亲，请输入邮箱号！");
+            dto.setFeedbackMessage("亲，请输入邮箱！");
             return dto;
         }
         if (this.userMapper.selectByEmail(email) != null) {
@@ -56,14 +56,14 @@ public class EmailController extends BaseController {
     ) {
         if (StringUtils.isBlank(email)) {
             EmailResponseDto dto = new EmailResponseDto();
-            dto.setFeedbackMessage("亲，请输入邮箱号！");
+            dto.setFeedbackMessage("亲，请输入邮箱！");
             dto.setSuccess(false);
             return dto;
         }
         if (StringUtils.isBlank(code)) {
             EmailResponseDto dto = new EmailResponseDto();
-            dto.setFeedbackMessage("亲，请输入验证码！");
             dto.setSuccess(false);
+            dto.setFeedbackMessage("亲，请输入验证码！");
             return dto;
         }
         return this.emailService.checkEmailCode(email, code);
