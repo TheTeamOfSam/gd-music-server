@@ -6,6 +6,7 @@ import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
 import com.sam.graduation.design.gdmusicserver.service.email.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,12 @@ public class EmailController extends BaseController {
     public EmailResponseDto getEmailCode(
             @RequestParam("email") String email
     ) {
+        if (StringUtils.isBlank(email)) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setSuccess(false);
+            dto.setFeedbackMessage("亲，请输入邮箱号！");
+            return dto;
+        }
         if (this.userMapper.selectByEmail(email) != null) {
             EmailResponseDto dto = new EmailResponseDto();
             dto.setSuccess(false);
@@ -47,6 +54,18 @@ public class EmailController extends BaseController {
             @RequestParam("email") String email,
             @RequestParam("code") String code
     ) {
+        if (StringUtils.isBlank(email)) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setFeedbackMessage("亲，请输入邮箱号！");
+            dto.setSuccess(false);
+            return dto;
+        }
+        if (StringUtils.isBlank(code)) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setFeedbackMessage("亲，请输入验证码！");
+            dto.setSuccess(false);
+            return dto;
+        }
         return this.emailService.checkEmailCode(email, code);
     }
 
