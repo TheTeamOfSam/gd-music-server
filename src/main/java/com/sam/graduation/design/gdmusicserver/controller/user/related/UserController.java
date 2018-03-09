@@ -2,6 +2,7 @@ package com.sam.graduation.design.gdmusicserver.controller.user.related;
 
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
+import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
 import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
 import com.sam.graduation.design.gdmusicserver.model.pojo.User;
@@ -12,7 +13,11 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +37,35 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @ApiOperation("更改头像接口")
+    @RequestMapping(value = "/user/service/head/photo/@change", method = RequestMethod.POST)
+    public Map<String, Object> userServiceHeadPhotoChange(
+            @RequestParam("head_photo") MultipartFile headPhoto,
+            @RequestParam("userId") Long userID
+    ) {
+        if (headPhoto == null || headPhoto.getSize() == 0) {
+            return this.error("亲，请上传头像图片文件！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        String hpOraName = headPhoto.getOriginalFilename();
+        String hpFormat = hpOraName.toLowerCase().substring(hpOraName.lastIndexOf("."), hpOraName.length());
+        if (!(hpFormat.equals(".jpg") || hpFormat.equals(".jpeg") ||
+                hpFormat.equals(".bmp") || hpFormat.equals(".png"))) {
+            return this.error("亲，请上传jpg/jpeg/bmp/png格式的图片！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+
+        MessageDto messageDto = null;
+
+        try {
+            messageDto = this.userService.userHeadPhotoUpdate(userID, headPhoto);
+        } catch (Exception e) {
+            logger.error("e:{}!", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(messageDto);
+    }
 
     @ApiOperation("注册接口")
     @RequestMapping(value = "/user/service/@register", method = RequestMethod.POST)
@@ -152,5 +186,6 @@ public class UserController extends BaseController {
         }
         return this.success(userDto);
     }
+
 
 }

@@ -1,6 +1,10 @@
 package com.sam.graduation.design.gdmusicserver.service.user;
 
+import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @author sam199510 273045049@qq.com
@@ -13,5 +17,7 @@ public interface UserService {
     UserDto userLogin(UserDto dto);
 
     UserDto userInfoGet(Long userID);
+
+    MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto) throws IOException;
 
 }
