@@ -1,6 +1,5 @@
 package com.sam.graduation.design.gdmusicserver.controller.user.related;
 
-import com.alibaba.fastjson.JSON;
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
@@ -13,12 +12,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -233,14 +232,62 @@ public class UserController extends BaseController {
 
         UserDto userDto = null;
         try {
-            userDto = this.userService.userBasicInfoUpdate(dto);
+            userDto = this.userService.userInfoUpdate(dto);
         } catch (Exception e) {
             logger.error("e:{}", e);
         }
-        if (userDto== null) {
+        if (userDto == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
         return this.success(userDto);
+    }
+
+    @ApiOperation("个人密码修改接口")
+    @RequestMapping(value = "/user/service/password/@reset", method = RequestMethod.POST)
+    public Map<String, Object> userServicePasswordReset(
+            @RequestParam("uId") Long userId,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+            return this.error("亲，用户id不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(oldPassword)) {
+            return this.error("亲，原密码不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(newPassword)) {
+            return this.error("亲，新密码不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        // TODO: 验证原密码是否正确
+        User oldUser = null;
+        try {
+            // 查询用户
+            oldUser = this.userMapper.selectByPrimaryKey(userId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (oldUser == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        // 验证原密码是否正确
+        if (!ConfusionUtil.pwToMD5(oldPassword, userId).equals(oldUser.getPassword())) {
+            return this.error("原密码不正确", ServiceResultType.RESULT_MD5_SYSTEM_ERROR);
+        }
+
+        // TODO: 设置新密码
+        UserDto userDto = new UserDto();
+        userDto.setId(userId);
+        userDto.setPassword(ConfusionUtil.pwToMD5(newPassword, userId));
+        UserDto userDtoPO = null;
+        try {
+            userDtoPO = this.userService.userInfoUpdate(userDto);
+        } catch (Exception e) {
+            logger.error("e:{}!", e);
+        }
+        if (userDtoPO == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userDtoPO);
     }
 
 
