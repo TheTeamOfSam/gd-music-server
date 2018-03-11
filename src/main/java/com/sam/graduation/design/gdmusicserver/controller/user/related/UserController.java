@@ -38,6 +38,13 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 更改头像接口
+     *
+     * @param headPhoto 传入的图片文件
+     * @param userID    用户id
+     * @return
+     */
     @ApiOperation("更改头像接口")
     @RequestMapping(value = "/user/service/head/photo/@change", method = RequestMethod.POST)
     public Map<String, Object> userServiceHeadPhotoChange(
@@ -66,6 +73,18 @@ public class UserController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 注册接口
+     *
+     * @param rEmail    邮箱
+     * @param rNickname 昵称
+     * @param rPassword 密码
+     * @param rGender   性别
+     * @param rDOfB     出生日期
+     * @param rProvince 省份
+     * @param rCity     城市
+     * @return
+     */
     @ApiOperation("注册接口")
     @RequestMapping(value = "/user/service/@register", method = RequestMethod.POST)
     public Map<String, Object> userServiceRegister(
@@ -131,6 +150,13 @@ public class UserController extends BaseController {
         return this.success(userDto);
     }
 
+    /**
+     * 登录接口
+     *
+     * @param lEmail    邮箱
+     * @param lPassword 密码
+     * @return
+     */
     @ApiOperation("登录接口")
     @RequestMapping(value = "/user/service/@login", method = RequestMethod.POST)
     public Map<String, Object> userServiceLogin(
@@ -166,6 +192,12 @@ public class UserController extends BaseController {
         return this.success(userDto);
     }
 
+    /**
+     * 获取个人信息
+     *
+     * @param userID 用户id
+     * @return
+     */
     @ApiOperation("获取个人信息接口")
     @RequestMapping(value = "/user/service/info/@get", method = RequestMethod.POST)
     public Map<String, Object> userServiceInfoGet(
@@ -186,6 +218,17 @@ public class UserController extends BaseController {
         return this.success(userDto);
     }
 
+    /**
+     * 用户个人基本信息修改
+     *
+     * @param userId        用户id
+     * @param uGender       性别
+     * @param uDOfB         出生日期
+     * @param uIntroduction 介绍
+     * @param uProvince     省份
+     * @param uCity         城市
+     * @return
+     */
     @ApiOperation("个人基础信息修改接口")
     @RequestMapping(value = "/user/service/basic/info/@change", method = RequestMethod.POST)
     public Map<String, Object> userServiceBasicInfoChange(
@@ -242,6 +285,13 @@ public class UserController extends BaseController {
         return this.success(userDto);
     }
 
+    /**
+     * 密码更新接口
+     * @param userId 用户id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return
+     */
     @ApiOperation("个人密码修改接口")
     @RequestMapping(value = "/user/service/password/@reset", method = RequestMethod.POST)
     public Map<String, Object> userServicePasswordReset(
