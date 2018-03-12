@@ -14,6 +14,5 @@ public interface SpecialService {
     List<SpecialDto> findLikeSpecialName(String specialName);
 
     List<ArtistSpecialDto> findASLikeSpecialName(String specialName);
-
-
+    
 }
