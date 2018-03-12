@@ -139,4 +139,11 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectLikeSpecialName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM special
+    <if test="special_name != null">
+      WHERE special_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
 </mapper>
