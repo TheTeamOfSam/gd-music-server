@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ArtistSpecialMusicMapper {
 
-    List<ArtistSpecialMusic> selectByMusicName(
+    List<ArtistSpecialMusic> selectLikeMusicName(
             @Param("music_name") String musicName
     );
 

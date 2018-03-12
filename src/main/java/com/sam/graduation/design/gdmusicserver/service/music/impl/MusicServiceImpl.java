@@ -1,7 +1,10 @@
 package com.sam.graduation.design.gdmusicserver.service.music.impl;
 
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialMusicDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.dao.ArtistSpecialMusicMapper;
 import com.sam.graduation.design.gdmusicserver.dao.MusicMapper;
+import com.sam.graduation.design.gdmusicserver.model.pojo.ArtistSpecialMusic;
 import com.sam.graduation.design.gdmusicserver.model.pojo.Music;
 import com.sam.graduation.design.gdmusicserver.service.base.BaseService;
 import com.sam.graduation.design.gdmusicserver.service.music.MusicService;
@@ -24,8 +27,14 @@ public class MusicServiceImpl extends BaseService implements MusicService {
 
     private static final String FILE_SEPARATOR = File.separator;
 
+    @Value("${url.link}")
+    private String urlLink;
+
     @Autowired
     private MusicMapper musicMapper;
+
+    @Autowired
+    private ArtistSpecialMusicMapper artistSpecialMusicMapper;
 
     @Value("${music.root.path}")
     private String musicRootPath;
@@ -49,8 +58,8 @@ public class MusicServiceImpl extends BaseService implements MusicService {
             integers.add(updateResult);
         }
 
-        for (Integer integer: integers) {
-            if (integer==0) {
+        for (Integer integer : integers) {
+            if (integer == 0) {
                 messageDto = new MessageDto();
                 messageDto.setSuccess(false);
                 messageDto.setMessage("一键更新音乐播放时长失败");
@@ -61,5 +70,29 @@ public class MusicServiceImpl extends BaseService implements MusicService {
         messageDto.setMessage("一键更新音乐播放时长成功");
         messageDto.setSuccess(true);
         return messageDto;
+    }
+
+    @Override
+    public List<ArtistSpecialMusicDto> findLikeMusicName(String musicName) {
+        List<ArtistSpecialMusicDto> artistSpecialMusicDtos = null;
+
+        List<ArtistSpecialMusic> artistSpecialMusics = null;
+        try {
+            artistSpecialMusics = this.artistSpecialMusicMapper.selectLikeMusicName(musicName);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (artistSpecialMusics == null || artistSpecialMusics.size() == 0) {
+            artistSpecialMusicDtos = new ArrayList<ArtistSpecialMusicDto>();
+            return artistSpecialMusicDtos;
+        }
+        artistSpecialMusicDtos = new ArrayList<ArtistSpecialMusicDto>();
+        for (ArtistSpecialMusic asm : artistSpecialMusics) {
+            ArtistSpecialMusicDto artistSpecialMusicDto = new ArtistSpecialMusicDto();
+            artistSpecialMusicDto.from(asm);
+            artistSpecialMusicDto.setMusicPath(urlLink + FILE_SEPARATOR + asm.getMusicPath());
+            artistSpecialMusicDtos.add(artistSpecialMusicDto);
+        }
+        return artistSpecialMusicDtos;
     }
 }

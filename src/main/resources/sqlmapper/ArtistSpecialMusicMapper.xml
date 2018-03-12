@@ -18,7 +18,7 @@
         <result column="music_duration" jdbcType="INTEGER" property="musicDuration"/>
         <result column="music_path" jdbcType="VARCHAR" property="musicPath"/>
     </resultMap>
-    <select id="selectByMusicName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectLikeMusicName" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         a.id AS artist_id,
         a.artist_name AS artist_name,
