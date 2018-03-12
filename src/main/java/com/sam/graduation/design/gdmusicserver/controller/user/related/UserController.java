@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -287,7 +288,8 @@ public class UserController extends BaseController {
 
     /**
      * 密码更新接口
-     * @param userId 用户id
+     *
+     * @param userId      用户id
      * @param oldPassword 旧密码
      * @param newPassword 新密码
      * @return
@@ -338,6 +340,32 @@ public class UserController extends BaseController {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
         return this.success(userDtoPO);
+    }
+
+    /**
+     * 根据用户名模糊搜索接口
+     *
+     * @param nickname 用户昵称
+     * @return
+     */
+    @ApiOperation("根据用户名模糊搜索接口")
+    @RequestMapping(value = "/user/service/find/like/nickname/@query", method = RequestMethod.GET)
+    public Map<String, Object> userServiceFindLikeNickname(
+            @RequestParam(value = "nickname", required = false) String nickname
+    ) {
+        if (StringUtils.isBlank(nickname)) {
+            return this.error("搜索昵称不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<UserDto> userDtos = null;
+        try {
+            userDtos = this.userService.findUserLikeNickName(nickname);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userDtos);
     }
 
 

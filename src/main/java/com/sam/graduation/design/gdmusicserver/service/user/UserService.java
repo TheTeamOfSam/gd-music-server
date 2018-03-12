@@ -5,6 +5,7 @@ import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author sam199510 273045049@qq.com
@@ -20,6 +21,8 @@ public interface UserService {
 
     UserDto userInfoUpdate(UserDto dto);
 
-    MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto) throws IOException;
+    MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto);
+
+    List<UserDto> findUserLikeNickName(String nickname);
 
 }

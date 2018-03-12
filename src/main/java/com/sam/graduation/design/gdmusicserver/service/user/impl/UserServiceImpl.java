@@ -28,7 +28,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author sam199510 273045049@qq.com
@@ -233,4 +235,25 @@ public class UserServiceImpl extends BaseService implements UserService {
         return messageDto;
     }
 
+    @Override
+    public List<UserDto> findUserLikeNickName(String nickname) {
+        List<UserDto> userDtos = null;
+        List<User> users = null;
+        try {
+            users = this.userMapper.selectLikeNickname(nickname);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (users == null) {
+            userDtos = new ArrayList<UserDto>();
+            return userDtos;
+        }
+        userDtos = new ArrayList<UserDto>();
+        for (User user : users) {
+            UserDto userDto = new UserDto();
+            userDto.from(user);
+            userDtos.add(userDto);
+        }
+        return userDtos;
+    }
 }

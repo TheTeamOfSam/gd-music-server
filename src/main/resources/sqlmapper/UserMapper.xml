@@ -197,4 +197,11 @@
     WHERE email = #{email,jdbcType=VARCHAR}
     AND password = #{password,jdbcType=VARCHAR}
   </select>
+  <select id="selectLikeNickname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+    <if test="nickname != null">
+      WHERE nickname LIKE CONCAT('%',#{nickname,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
 </mapper>
