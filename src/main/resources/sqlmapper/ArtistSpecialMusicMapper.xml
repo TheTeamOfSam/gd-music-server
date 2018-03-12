@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.ArtistSpecialMusicMapper">
+    <resultMap id="BaseResultMap" type="com.sam.graduation.design.gdmusicserver.model.pojo.ArtistSpecialMusic">
+        <result column="artist_id" jdbcType="BIGINT" property="artistId"/>
+        <result column="artist_name" jdbcType="VARCHAR" property="artistName"/>
+        <result column="artist_other_name" jdbcType="VARCHAR" property="artistOtherName"/>
+        <result column="artist_intro" jdbcType="VARCHAR" property="artistIntro"/>
+        <result column="artist_head_photo_big" jdbcType="VARCHAR" property="artistHeadPhotoBig"/>
+        <result column="artist_head_photo_small" jdbcType="VARCHAR" property="artistHeadPhotoSmall"/>
+        <result column="special_id" jdbcType="BIGINT" property="specialId"/>
+        <result column="special_name" jdbcType="VARCHAR" property="specialName"/>
+        <result column="special_publish_company" jdbcType="VARCHAR" property="specialPublishCompany"/>
+        <result column="special_photo" jdbcType="VARCHAR" property="specialPhoto"/>
+        <result column="special_publish_time" jdbcType="TIMESTAMP" property="specialPublishTime"/>
+        <result column="music_id" jdbcType="BIGINT" property="musicId"/>
+        <result column="music_name" jdbcType="VARCHAR" property="musicName"/>
+        <result column="music_duration" jdbcType="INTEGER" property="musicDuration"/>
+        <result column="music_path" jdbcType="VARCHAR" property="musicPath"/>
+    </resultMap>
+    <select id="selectLikeMusicName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        a.id AS artist_id,
+        a.artist_name AS artist_name,
+        a.artist_other_name AS artist_other_name,
+        a.intro AS artist_intro,
+        a.artist_head_photo_big AS artist_head_photo_big,
+        a.artist_head_photo_small AS artist_head_photo_small,
+        s.id AS special_id,
+        s.special_name AS special_name,
+        s.publish_company AS special_publish_company,
+        s.publish_time AS special_publish_time,
+        s.special_photo AS special_photo,
+        m.id AS music_id,
+        m.music_name AS music_name,
+        m.music_path AS music_path,
+        m.music_duration AS music_duration
+        FROM artist a,special s, music m
+        WHERE a.id = s.artist_id
+        AND s.id = m.special_id
+        <if test="music_name != null">
+            AND m.music_name LIKE CONCAT('%',#{music_name,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

@@ -129,7 +129,7 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
-    public UserDto userBasicInfoUpdate(UserDto dto) {
+    public UserDto userInfoUpdate(UserDto dto) {
         UserDto userDto = null;
 
         User user = dto.to();

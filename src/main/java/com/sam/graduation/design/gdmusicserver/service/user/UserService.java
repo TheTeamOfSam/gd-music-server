@@ -18,7 +18,7 @@ public interface UserService {
 
     UserDto userInfoGet(Long userID);
 
-    UserDto userBasicInfoUpdate(UserDto dto);
+    UserDto userInfoUpdate(UserDto dto);
 
     MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto) throws IOException;
 
