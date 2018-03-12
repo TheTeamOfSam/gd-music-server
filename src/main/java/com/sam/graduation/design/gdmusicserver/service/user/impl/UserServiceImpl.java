@@ -252,6 +252,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         for (User user : users) {
             UserDto userDto = new UserDto();
             userDto.from(user);
+            userDto.setHeadPhoto(urlLink + FILE_SEPARATOR + user.getHeadPhoto());
             userDtos.add(userDto);
         }
         return userDtos;
