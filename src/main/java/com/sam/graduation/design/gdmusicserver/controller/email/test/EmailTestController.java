@@ -30,6 +30,10 @@ public class EmailTestController {
         return this.emailService.sendEmailCode(email);
     }
 
+
+
+
+
     @ApiOperation("邮箱feign验证测试接口")
     @RequestMapping(value = "/email/check/@check", method = RequestMethod.POST)
     public EmailResponseDto checkEmailCode (
