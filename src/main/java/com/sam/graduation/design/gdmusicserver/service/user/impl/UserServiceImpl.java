@@ -155,11 +155,11 @@ public class UserServiceImpl extends BaseService implements UserService {
 
         BufferedImage bi = null;
 
-        // TODO: 删除服务器上的老头像
-        User userGet = this.userMapper.selectByPrimaryKey(userID);
-        String hpOldRelPath = userGet.getHeadPhoto();
-        File hpOldFile = Paths.get(headImagePath, hpOldRelPath).toFile();
-        FileUtils.deleteQuietly(hpOldFile);
+//        // TODO: 删除服务器上的老头像
+//        User userGet = this.userMapper.selectByPrimaryKey(userID);
+//        String hpOldRelPath = userGet.getHeadPhoto();
+//        File hpOldFile = Paths.get(headImagePath, hpOldRelPath).toFile();
+//        FileUtils.deleteQuietly(hpOldFile);
 
         // TODO: 计算图片切割点位
         try {
