@@ -2,6 +2,9 @@ package com.sam.graduation.design.gdmusicserver.service.user.music.list;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
+
+import java.util.List;
 
 /**
  * @author sam199510 273045049@qq.com
@@ -10,5 +13,7 @@ import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
 public interface UserMusicListService {
 
     MessageDto userMusicListCreate(UserMusicListDto userMusicListDto);
+
+    List<UserUserMusicListAndMusicInItDto> findListUserMusicListName(String userMusicListName);
 
 }

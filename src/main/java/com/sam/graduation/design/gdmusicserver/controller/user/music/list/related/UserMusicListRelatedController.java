@@ -4,6 +4,7 @@ import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
 import com.sam.graduation.design.gdmusicserver.service.user.music.list.UserMusicListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,6 +64,26 @@ public class UserMusicListRelatedController extends BaseController {
             return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         return this.success(messageDto);
+    }
+
+    @ApiOperation("根据用户歌单名查询歌单接口")
+    @RequestMapping(value = "/find/like/user/music/list/name/@query", method = RequestMethod.GET)
+    public Map<String, Object> findLikeUserMusicListName(
+            @RequestParam(value = "user_music_list_name", required = false) String userMusicListName
+    ) {
+        if (StringUtils.isBlank(userMusicListName)) {
+            return this.error("搜索的歌单名不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<UserUserMusicListAndMusicInItDto> userUserMusicListAndMusicInItDtos = null;
+        try {
+            userUserMusicListAndMusicInItDtos = this.userMusicListService.findListUserMusicListName(userMusicListName);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userUserMusicListAndMusicInItDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userUserMusicListAndMusicInItDtos);
     }
 
 }

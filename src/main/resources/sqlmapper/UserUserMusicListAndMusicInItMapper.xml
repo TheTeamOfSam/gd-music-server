@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.UserUserMusicListAndMusicInItMapper">
+    <resultMap id="BaseResultMap"
+               type="com.sam.graduation.design.gdmusicserver.model.pojo.UserUserMusicListAndMusicInIt">
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_nickname" jdbcType="VARCHAR" property="userNickname"/>
+        <result column="user_head_photo" jdbcType="VARCHAR" property="userHeadPhoto"/>
+        <result column="user_music_list_id" jdbcType="BIGINT" property="userMusicListId"/>
+        <result column="user_music_list_name" jdbcType="VARCHAR" property="userMusicListName"/>
+        <result column="user_music_list_photo" jdbcType="VARCHAR" property="userMusicListPhoto"/>
+        <result column="user_music_list_intro" jdbcType="VARCHAR" property="userMusicListIntro"/>
+        <result column="user_music_list_created_time" jdbcType="TIMESTAMP" property="userMusicListCreatedTime"/>
+        <result column="num_of_music_in_user_music_list" jdbcType="INTEGER" property="numOfMusicInUserMusicList"/>
+    </resultMap>
+    <select id="selectLikeUserMusicListName" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT
+          u.id                                  AS user_id,
+          u.nickname                            AS user_nickname,
+          u.head_photo                          AS user_head_photo,
+          umsl.id                               AS user_music_list_id,
+          umsl.music_list_name                  AS user_music_list_name,
+          umsl.music_list_photo                 AS user_music_list_photo,
+          umsl.intro                            AS user_music_list_intro,
+          umsl.generate_time                    AS user_music_list_created_time,
+          nouml.num_of_music_in_user_music_list AS num_of_music_in_user_music_list
+      FROM
+          user             u,
+          user_music_list  umsl,
+          (
+              SELECT
+                 uml.id                                                  AS  user_music_list_id,
+                 count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END)  AS  num_of_music_in_user_music_list
+              FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
+              GROUP BY uml.id
+              ORDER BY uml.id ASC
+          )                nouml
+      WHERE u.id = umsl.user_id AND umsl.id = nouml.user_music_list_id
+      <if test="user_music_list_name != null">
+          AND umsl.music_list_name LIKE concat('%', #{user_music_list_name,jdbcType=VARCHAR}, '%')
+      </if>
+    </select>
+</mapper>
