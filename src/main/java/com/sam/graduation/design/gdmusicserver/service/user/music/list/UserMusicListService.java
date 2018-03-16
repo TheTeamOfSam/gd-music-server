@@ -20,4 +20,6 @@ public interface UserMusicListService {
 
     UserMusicListDto findUserMusicListByUserMusicListId(Long userMusicListId);
 
+    MessageDto userMusicListUpdate(UserMusicListDto userMusicListDto);
+
 }

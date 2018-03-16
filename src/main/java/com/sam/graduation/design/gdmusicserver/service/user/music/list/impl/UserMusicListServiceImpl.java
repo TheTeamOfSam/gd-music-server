@@ -142,9 +142,9 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         UserMusicList userMusicList = null;
 
         try {
-            userMusicList= this.userMusicListMapper.selectByPrimaryKey(userMusicListId);
+            userMusicList = this.userMusicListMapper.selectByPrimaryKey(userMusicListId);
         } catch (Exception e) {
-            logger.error("e:{}",e);
+            logger.error("e:{}", e);
         }
         if (userMusicList == null) {
             return userMusicListDto;
@@ -157,5 +157,32 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
             userMusicListDto.setMusicListPhoto(userMusicList.getMusicListPhoto());
         }
         return userMusicListDto;
+    }
+
+    @Override
+    public MessageDto userMusicListUpdate(UserMusicListDto userMusicListDto) {
+        MessageDto messageDto = null;
+
+        UserMusicList userMusicList = userMusicListDto.to();
+        userMusicList.setId(userMusicListDto.getId());
+        userMusicList.setLastModifiedTime(new Date());
+
+        int updateResult = 0;
+
+        try {
+            updateResult = this.userMusicListMapper.updateByPrimaryKeySelective(userMusicList);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (updateResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("歌单更新失败");
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setSuccess(true);
+        messageDto.setMessage("歌单更新成功");
+        return messageDto;
     }
 }

@@ -126,4 +126,41 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(userMusicListDto);
     }
 
+    @ApiOperation("歌单信息更新接口")
+    @RequestMapping(value = "/update/user/music/list/@update", method = RequestMethod.POST)
+    public Map<String, Object> updateUserMusicList(
+            @RequestParam(value = "user_music_list_id", required = false) Long userMusicListId,
+            @RequestParam(value = "user_music_list_name", required = false) String userMusicListName,
+            @RequestParam(value = "user_music_list_intro", required = false) String userMusicListIntro
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(userMusicListName)) {
+            return this.error("歌单名不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isNotBlank(userMusicListIntro) && userMusicListIntro.length() > 150) {
+            return this.error("介绍字数不能超过150个字", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+
+        UserMusicListDto userMusicListDto = new UserMusicListDto();
+        userMusicListDto.setId(userMusicListId);
+        userMusicListDto.setMusicListName(userMusicListName);
+        userMusicListDto.setIntro(userMusicListIntro);
+
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.userMusicListService.userMusicListUpdate(userMusicListDto);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
+
 }
