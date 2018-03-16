@@ -98,12 +98,32 @@ public class UserMusicListRelatedController extends BaseController {
         try {
             userUserMusicListAndMusicInItDtos = this.userMusicListService.findUserMusicListByUserId(userID);
         } catch (Exception e) {
-            logger.error("e:{}.",e);
+            logger.error("e:{}.", e);
         }
         if (userUserMusicListAndMusicInItDtos == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
         return this.success(userUserMusicListAndMusicInItDtos);
+    }
+
+    @ApiOperation("根据歌单id查询歌单，在前端则展示在编辑歌单页面的接口")
+    @RequestMapping(value = "/find/user/music/list/by/music/list/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> findUserMusicListByMusicListId(
+            @RequestParam(value = "user_music_list_id", required = false) Long userMusicListId
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+            return this.error("亲，歌单id为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        UserMusicListDto userMusicListDto = null;
+        try {
+            userMusicListDto = this.userMusicListService.findUserMusicListByUserMusicListId(userMusicListId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userMusicListDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userMusicListDto);
     }
 
 }

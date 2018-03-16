@@ -18,4 +18,6 @@ public interface UserMusicListService {
 
     List<UserUserMusicListAndMusicInItDto> findUserMusicListByUserId(Long userID);
 
+    UserMusicListDto findUserMusicListByUserMusicListId(Long userMusicListId);
+
 }

@@ -135,4 +135,27 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         }
         return userUserMusicListAndMusicInItDtos;
     }
+
+    @Override
+    public UserMusicListDto findUserMusicListByUserMusicListId(Long userMusicListId) {
+        UserMusicListDto userMusicListDto = null;
+        UserMusicList userMusicList = null;
+
+        try {
+            userMusicList= this.userMusicListMapper.selectByPrimaryKey(userMusicListId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (userMusicList == null) {
+            return userMusicListDto;
+        }
+        userMusicListDto = new UserMusicListDto();
+        userMusicListDto.from(userMusicList);
+        if (StringUtils.isBlank(userMusicList.getMusicListPhoto())) {
+            userMusicListDto.setMusicListPhoto(blankUserMusicListPhotoUrlLink);
+        } else {
+            userMusicListDto.setMusicListPhoto(userMusicList.getMusicListPhoto());
+        }
+        return userMusicListDto;
+    }
 }
