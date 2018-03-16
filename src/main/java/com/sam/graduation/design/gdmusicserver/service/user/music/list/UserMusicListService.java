@@ -16,4 +16,6 @@ public interface UserMusicListService {
 
     List<UserUserMusicListAndMusicInItDto> findListUserMusicListName(String userMusicListName);
 
+    List<UserUserMusicListAndMusicInItDto> findUserMusicListByUserId(Long userID);
+
 }

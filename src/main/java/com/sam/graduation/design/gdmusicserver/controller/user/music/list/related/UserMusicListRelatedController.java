@@ -86,4 +86,24 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(userUserMusicListAndMusicInItDtos);
     }
 
+    @ApiOperation("根据用户id查找创建的歌单的信息")
+    @RequestMapping(value = "/find/user/music/list/by/user/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> findUserMusicListByUserId(
+            @RequestParam(value = "user_id", required = false) Long userID
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userID.longValue()))) {
+            return this.error("亲，id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<UserUserMusicListAndMusicInItDto> userUserMusicListAndMusicInItDtos = null;
+        try {
+            userUserMusicListAndMusicInItDtos = this.userMusicListService.findUserMusicListByUserId(userID);
+        } catch (Exception e) {
+            logger.error("e:{}.",e);
+        }
+        if (userUserMusicListAndMusicInItDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userUserMusicListAndMusicInItDtos);
+    }
+
 }

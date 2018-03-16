@@ -102,4 +102,37 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         }
         return userUserMusicListAndMusicInItDtos;
     }
+
+    @Override
+    public List<UserUserMusicListAndMusicInItDto> findUserMusicListByUserId(Long userID) {
+        List<UserUserMusicListAndMusicInItDto> userUserMusicListAndMusicInItDtos = null;
+
+        List<UserUserMusicListAndMusicInIt> userUserMusicListAndMusicInIts = null;
+        try {
+            userUserMusicListAndMusicInIts = this.userUserMusicListAndMusicInItMapper.selectByUserId(userID);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userUserMusicListAndMusicInIts == null) {
+            userUserMusicListAndMusicInItDtos = new ArrayList<UserUserMusicListAndMusicInItDto>();
+            return userUserMusicListAndMusicInItDtos;
+        }
+        userUserMusicListAndMusicInItDtos = new ArrayList<UserUserMusicListAndMusicInItDto>();
+        for (UserUserMusicListAndMusicInIt uumlamii : userUserMusicListAndMusicInIts) {
+            UserUserMusicListAndMusicInItDto uumlamiiDto = new UserUserMusicListAndMusicInItDto();
+            uumlamiiDto.from(uumlamii);
+            if (StringUtils.isBlank(uumlamii.getUserMusicListPhoto())) {
+                uumlamiiDto.setUserMusicListPhoto(blankUserMusicListPhotoUrlLink);
+            } else {
+                uumlamiiDto.setUserMusicListPhoto(uumlamii.getUserMusicListPhoto());
+            }
+            if (StringUtils.isBlank(uumlamii.getUserHeadPhoto())) {
+                uumlamiiDto.setUserHeadPhoto(defaultHeadPhoto);
+            } else {
+                uumlamiiDto.setUserHeadPhoto(urlLink + FILE_SEPARATOR + uumlamii.getUserHeadPhoto());
+            }
+            userUserMusicListAndMusicInItDtos.add(uumlamiiDto);
+        }
+        return userUserMusicListAndMusicInItDtos;
+    }
 }
