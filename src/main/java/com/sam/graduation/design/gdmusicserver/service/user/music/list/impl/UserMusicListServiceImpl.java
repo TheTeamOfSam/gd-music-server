@@ -5,12 +5,8 @@ import com.sam.graduation.design.gdmusicserver.controller.dto.MusicInUserMusicLi
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
 import com.sam.graduation.design.gdmusicserver.controller.pub.AppException;
-import com.sam.graduation.design.gdmusicserver.dao.MusicInUserMusicListMapper;
-import com.sam.graduation.design.gdmusicserver.dao.UserMusicListMapper;
-import com.sam.graduation.design.gdmusicserver.dao.UserUserMusicListAndMusicInItMapper;
-import com.sam.graduation.design.gdmusicserver.model.pojo.MusicInUserMusicList;
-import com.sam.graduation.design.gdmusicserver.model.pojo.UserMusicList;
-import com.sam.graduation.design.gdmusicserver.model.pojo.UserUserMusicListAndMusicInIt;
+import com.sam.graduation.design.gdmusicserver.dao.*;
+import com.sam.graduation.design.gdmusicserver.model.pojo.*;
 import com.sam.graduation.design.gdmusicserver.service.base.BaseService;
 import com.sam.graduation.design.gdmusicserver.service.user.music.list.UserMusicListService;
 import org.apache.commons.lang.StringUtils;
@@ -43,6 +39,15 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
 
     @Value("${default.head.photo}")
     private String defaultHeadPhoto;
+
+    @Autowired
+    private ArtistMapper artistMapper;
+
+    @Autowired
+    private SpecialMapper specialMapper;
+
+    @Autowired
+    private MusicMapper musicMapper;
 
     @Autowired
     private UserMusicListMapper userMusicListMapper;
@@ -231,16 +236,25 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
     public MessageDto collectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto) {
         MessageDto messageDto = null;
 
+        Music music = this.musicMapper.selectByPrimaryKey(musicInUserMusicListDto.getMusicId());
+        Special special = this.specialMapper.selectByPrimaryKey(music.getSpecialId());
+
         MusicInUserMusicList musicInUserMusicList = musicInUserMusicListDto.to();
         musicInUserMusicList.setCollectedTime(new Date());
         musicInUserMusicList.setCreatedTime(new Date());
         musicInUserMusicList.setLastModifiedTime(new Date());
         musicInUserMusicList.setIsDelete((byte) 0);
 
+        UserMusicList userMusicList = new UserMusicList();
+        userMusicList.setId(musicInUserMusicList.getUserMusicListId());
+        userMusicList.setMusicListPhoto(special.getSpecialPhoto());
+        userMusicList.setLastModifiedTime(new Date());
+
         int collectResult;
 
         try {
             collectResult = this.musicInUserMusicListMapper.insertSelective(musicInUserMusicList);
+            this.userMusicListMapper.updateByPrimaryKeySelective(userMusicList);
         } catch (Exception e) {
             logger.error("e:{}",e);
             throw new AppException("收藏音乐异常");
