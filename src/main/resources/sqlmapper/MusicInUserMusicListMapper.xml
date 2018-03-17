@@ -137,4 +137,16 @@
     AND music_id = #{music_id,jdbcType=BIGINT}
     AND user_id = #{user_id,jdbcType=BIGINT}
   </select>
+  <delete id="deleteByUserMusicListIdAndMusicId" parameterType="java.util.Map">
+    DELETE FROM music_in_user_music_list
+    WHERE user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+    AND music_id = #{music_id,jdbcType=BIGINT}
+    AND user_id = #{user_id,jdbcType=BIGINT}
+  </delete>
+  <select id="selectByUserMusicListIdAndUserId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT *
+    FROM music_in_user_music_list
+    WHERE user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+    AND user_id = #{user_id,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -256,7 +256,7 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
             collectResult = this.musicInUserMusicListMapper.insertSelective(musicInUserMusicList);
             this.userMusicListMapper.updateByPrimaryKeySelective(userMusicList);
         } catch (Exception e) {
-            logger.error("e:{}",e);
+            logger.error("e:{}", e);
             throw new AppException("收藏音乐异常");
         }
         if (collectResult == 0) {
@@ -268,6 +268,77 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         messageDto = new MessageDto();
         messageDto.setSuccess(true);
         messageDto.setMessage("收藏歌曲成功");
+        return messageDto;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto unCollectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto) {
+        MessageDto messageDto = null;
+
+        // TODO: 先删除需要删除的音乐
+        int deleteMusicResult;
+        try {
+            deleteMusicResult = this.musicInUserMusicListMapper.deleteByUserMusicListIdAndMusicId(
+                    musicInUserMusicListDto.getUserMusicListId(),
+                    musicInUserMusicListDto.getMusicId(),
+                    musicInUserMusicListDto.getUserId()
+            );
+        } catch (Exception e) {
+            logger.error("e: {}", e);
+            throw new AppException("删除歌单内歌曲异常");
+        }
+        if (deleteMusicResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("删除歌单内歌曲错误");
+            return messageDto;
+        }
+
+        // TODO: 获取歌单内歌曲的第一首歌
+        List<MusicInUserMusicList> musicInUserMusicList = null;
+        try {
+            musicInUserMusicList = this.musicInUserMusicListMapper.selectByUserMusicListIdAndUserId(musicInUserMusicListDto.getUserMusicListId(), musicInUserMusicListDto.getUserId());
+        } catch (Exception e) {
+            logger.error("e: {}", e);
+            throw new AppException("获取歌单内第一首歌异常");
+        }
+        if (musicInUserMusicList == null) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("获取歌单内第一首歌错误");
+            return messageDto;
+        }
+
+        UserMusicList userMusicList = new UserMusicList();
+        userMusicList.setId(musicInUserMusicListDto.getUserMusicListId());
+        if (musicInUserMusicList == null || musicInUserMusicList.size() == 0) {
+            userMusicList.setMusicListPhoto("");
+        } else {
+            // TODO: 根据第一首歌的信息去更新掉用户歌单的封面
+            Music music = this.musicMapper.selectByPrimaryKey(musicInUserMusicList.get(0).getMusicId());
+            Special special = this.specialMapper.selectByPrimaryKey(music.getSpecialId());
+            userMusicList.setMusicListPhoto(special.getSpecialPhoto());
+        }
+        userMusicList.setLastModifiedTime(new Date());
+
+        int updateUserMusicResult;
+
+        try {
+            updateUserMusicResult = this.userMusicListMapper.updateByPrimaryKeySelective(userMusicList);
+        } catch (Exception e) {
+            logger.error("e: {}", e);
+            throw new AppException("更新用户歌单封面异常");
+        }
+        if (updateUserMusicResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("更新用户歌单封面错误");
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setSuccess(true);
+        messageDto.setMessage("删除歌曲成功");
         return messageDto;
     }
 }

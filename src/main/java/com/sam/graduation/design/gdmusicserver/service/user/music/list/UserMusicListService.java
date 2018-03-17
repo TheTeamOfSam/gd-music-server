@@ -29,4 +29,6 @@ public interface UserMusicListService {
 
     MessageDto collectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto);
 
+    MessageDto unCollectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto);
+
 }

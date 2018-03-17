@@ -235,4 +235,41 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    @ApiOperation("删除歌单内某一首歌的接口")
+    @RequestMapping(value = "/un/collect/music/into/user/music/list/@uncollect", method = RequestMethod.POST)
+    public Map<String, Object> unCollectMusicFromUserMusicList(
+            @RequestParam(value = "user_music_list_id", required = false) Long userMusicListId,
+            @RequestParam(value = "music_id", required = false) Long musicId,
+            @RequestParam(value = "user_id", required = false) Long userId
+    ) {
+        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+            return this.error("用户歌单列表id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+            return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+
+        MusicInUserMusicListDto musicInUserMusicListDto = new MusicInUserMusicListDto();
+        musicInUserMusicListDto.setUserMusicListId(userMusicListId);
+        musicInUserMusicListDto.setMusicId(musicId);
+        musicInUserMusicListDto.setUserId(userId);
+
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.userMusicListService.unCollectMusicIntoUserMusicList(musicInUserMusicListDto);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
+
 }

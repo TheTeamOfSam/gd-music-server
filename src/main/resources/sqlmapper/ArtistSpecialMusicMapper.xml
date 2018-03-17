@@ -69,5 +69,6 @@
       <if test="user_music_list_id != null">
           AND miuml.user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
       </if>
+      ORDER BY miuml.collected_time DESC
     </select>
 </mapper>
