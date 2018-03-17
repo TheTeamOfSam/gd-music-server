@@ -163,4 +163,27 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    @ApiOperation("删除用户歌单接口")
+    @RequestMapping(value = "/user/music/list/@delete", method = RequestMethod.GET)
+    public Map<String, Object> deleteUserMuscList(
+            @RequestParam(value = "user_music_list_id", required = false) Long userMusidListId
+    ){
+        if (StringUtils.isBlank(String.valueOf(userMusidListId.longValue()))) {
+            return this.error("歌单id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.userMusicListService.userMusicListDelete(userMusidListId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
+
 }

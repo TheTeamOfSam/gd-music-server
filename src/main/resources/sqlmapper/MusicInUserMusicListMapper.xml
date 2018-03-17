@@ -25,6 +25,10 @@
     delete from music_in_user_music_list
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByUserMusicListId" parameterType="java.lang.Long">
+    DELETE FROM music_in_user_music_list
+    WHERE user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+  </delete>
   <insert id="insert" parameterType="com.sam.graduation.design.gdmusicserver.model.pojo.MusicInUserMusicList">
     insert into music_in_user_music_list (id, user_music_list_id, music_id, 
       user_id, collected_time, created_time, 

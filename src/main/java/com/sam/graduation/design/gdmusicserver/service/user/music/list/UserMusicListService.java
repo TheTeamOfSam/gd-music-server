@@ -3,6 +3,7 @@ package com.sam.graduation.design.gdmusicserver.service.user.music.list;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
+import sun.plugin2.message.Message;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface UserMusicListService {
     UserMusicListDto findUserMusicListByUserMusicListId(Long userMusicListId);
 
     MessageDto userMusicListUpdate(UserMusicListDto userMusicListDto);
+
+    MessageDto userMusicListDelete(Long userMusicListId);
 
 }
