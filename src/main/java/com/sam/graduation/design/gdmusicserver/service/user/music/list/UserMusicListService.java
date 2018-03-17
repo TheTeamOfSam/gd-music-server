@@ -1,8 +1,10 @@
 package com.sam.graduation.design.gdmusicserver.service.user.music.list;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.MusicInUserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
+import com.sam.graduation.design.gdmusicserver.model.pojo.MusicInUserMusicList;
 import sun.plugin2.message.Message;
 
 import java.util.List;
@@ -24,5 +26,7 @@ public interface UserMusicListService {
     MessageDto userMusicListUpdate(UserMusicListDto userMusicListDto);
 
     MessageDto userMusicListDelete(Long userMusicListId);
+
+    MessageDto collectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto);
 
 }

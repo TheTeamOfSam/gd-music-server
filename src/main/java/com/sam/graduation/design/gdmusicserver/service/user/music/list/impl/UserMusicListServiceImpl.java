@@ -1,12 +1,14 @@
 package com.sam.graduation.design.gdmusicserver.service.user.music.list.impl;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.MusicInUserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicListDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
 import com.sam.graduation.design.gdmusicserver.controller.pub.AppException;
 import com.sam.graduation.design.gdmusicserver.dao.MusicInUserMusicListMapper;
 import com.sam.graduation.design.gdmusicserver.dao.UserMusicListMapper;
 import com.sam.graduation.design.gdmusicserver.dao.UserUserMusicListAndMusicInItMapper;
+import com.sam.graduation.design.gdmusicserver.model.pojo.MusicInUserMusicList;
 import com.sam.graduation.design.gdmusicserver.model.pojo.UserMusicList;
 import com.sam.graduation.design.gdmusicserver.model.pojo.UserUserMusicListAndMusicInIt;
 import com.sam.graduation.design.gdmusicserver.service.base.BaseService;
@@ -221,6 +223,37 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         messageDto = new MessageDto();
         messageDto.setSuccess(true);
         messageDto.setMessage("删除成功");
+        return messageDto;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto collectMusicIntoUserMusicList(MusicInUserMusicListDto musicInUserMusicListDto) {
+        MessageDto messageDto = null;
+
+        MusicInUserMusicList musicInUserMusicList = musicInUserMusicListDto.to();
+        musicInUserMusicList.setCollectedTime(new Date());
+        musicInUserMusicList.setCreatedTime(new Date());
+        musicInUserMusicList.setLastModifiedTime(new Date());
+        musicInUserMusicList.setIsDelete((byte) 0);
+
+        int collectResult;
+
+        try {
+            collectResult = this.musicInUserMusicListMapper.insertSelective(musicInUserMusicList);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+            throw new AppException("收藏音乐异常");
+        }
+        if (collectResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("收藏歌曲错误");
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setSuccess(true);
+        messageDto.setMessage("收藏歌曲成功");
         return messageDto;
     }
 }

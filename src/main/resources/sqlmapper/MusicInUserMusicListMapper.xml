@@ -130,4 +130,11 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByUserMusicListIdAndUserIdAndMusicId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT *
+    FROM music_in_user_music_list
+    WHERE user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+    AND music_id = #{music_id,jdbcType=BIGINT}
+    AND user_id = #{user_id,jdbcType=BIGINT}
+  </select>
 </mapper>

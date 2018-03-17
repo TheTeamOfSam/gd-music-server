@@ -19,4 +19,11 @@ public interface MusicInUserMusicListMapper {
     int updateByPrimaryKeySelective(MusicInUserMusicList record);
 
     int updateByPrimaryKey(MusicInUserMusicList record);
+
+    MusicInUserMusicList selectByUserMusicListIdAndUserIdAndMusicId(
+            @Param("user_music_list_id") Long userMusicListId,
+            @Param("music_id") Long musicId,
+            @Param("user_id") Long userId
+    );
+
 }
