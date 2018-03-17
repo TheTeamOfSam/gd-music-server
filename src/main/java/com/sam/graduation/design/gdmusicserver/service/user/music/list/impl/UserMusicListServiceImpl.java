@@ -310,7 +310,6 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
             return messageDto;
         }
 
-
         UserMusicList userMusicList = new UserMusicList();
         userMusicList.setId(musicInUserMusicListDto.getUserMusicListId());
         if (musicInUserMusicList == null || musicInUserMusicList.size() == 0) {
