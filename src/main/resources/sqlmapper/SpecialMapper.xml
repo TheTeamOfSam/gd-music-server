@@ -152,5 +152,6 @@
     <if test="artist_id != null">
       WHERE artist_id = #{artist_id,jdbcType=BIGINT}
     </if>
+    ORDER BY publish_time DESC
   </select>
 </mapper>
