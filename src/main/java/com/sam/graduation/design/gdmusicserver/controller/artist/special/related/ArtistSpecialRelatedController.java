@@ -2,6 +2,8 @@ package com.sam.graduation.design.gdmusicserver.controller.artist.special.relate
 
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialAndNumOfMusicInSpecialDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialMusicDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.SpecialDto;
 import com.sam.graduation.design.gdmusicserver.service.special.SpecialService;
 import io.swagger.annotations.Api;
@@ -46,6 +48,46 @@ public class ArtistSpecialRelatedController extends BaseController {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
         return this.success(specialDtos);
+    }
+
+    @ApiOperation("根据专辑id查找专辑接口")
+    @RequestMapping(value = "/find/special/by/special/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> findSpecialBySpecialId(
+            @RequestParam(value = "special_id", required = false) Long specialId
+    ) {
+        if (StringUtils.isBlank(String.valueOf(specialId.longValue()))) {
+            return this.error("专辑id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        ArtistSpecialAndNumOfMusicInSpecialDto artistSpecialAndNumOfMusicInSpecialDto = null;
+        try {
+            artistSpecialAndNumOfMusicInSpecialDto = this.specialService.findBySpecialId(specialId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (artistSpecialAndNumOfMusicInSpecialDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(artistSpecialAndNumOfMusicInSpecialDto);
+    }
+
+    @ApiOperation("根据专辑id获取专辑内歌曲列表的接口")
+    @RequestMapping(value = "/find/music/in/special/by/special/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> findMusicInSpecialBySpecialId (
+            @RequestParam(value = "special_id",required = false) Long specialId
+    ) {
+        if (StringUtils.isBlank(String.valueOf(specialId.longValue()))) {
+            return this.error("专辑id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<ArtistSpecialMusicDto> artistSpecialMusicDtos = null;
+        try {
+            artistSpecialMusicDtos = this.specialService.findMusicInSpecialBySpecialId(specialId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (artistSpecialMusicDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(artistSpecialMusicDtos);
     }
 
 }

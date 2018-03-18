@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.ArtistSpecialAndNumOfMusicInSpecialMapper">
+    <resultMap id="BaseResultMap"
+               type="com.sam.graduation.design.gdmusicserver.model.pojo.ArtistSpecialAndNumOfMusicInSpecial">
+        <result column="artist_id" jdbcType="BIGINT" property="artistId"/>
+        <result column="artist_name" jdbcType="VARCHAR" property="artistName"/>
+        <result column="special_photo" jdbcType="VARCHAR" property="specialPhoto"/>
+        <result column="special_name" jdbcType="VARCHAR" property="specialName"/>
+        <result column="publish_company" jdbcType="VARCHAR" property="publishCompany"/>
+        <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime"/>
+        <result column="num_of_music_in_special" jdbcType="INTEGER" property="numOfMusicInSpecial"/>
+    </resultMap>
+    <select id="selectBySpecialId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+          a.id                       AS artist_id,
+          a.artist_name              AS artist_name,
+          s.special_photo            AS special_photo,
+          s.special_name             AS special_name,
+          s.publish_company          AS publish_company,
+          s.publish_time             AS publish_time,
+          sm.num_of_music_in_special AS num_of_music_in_special
+        FROM
+          artist a,
+          special s,
+          (SELECT
+             s.id                                                 AS special_id,
+             count(CASE WHEN m.music_name IS NOT NULL THEN 1 END) AS num_of_music_in_special
+           FROM special s LEFT JOIN music m ON s.id = m.special_id
+           GROUP BY s.id) sm
+        WHERE a.id = s.artist_id
+        AND s.id = sm.special_id
+        <if test="special_id != null">
+            AND s.id = #{special_id,jdbcType=BIGINT}
+        </if>
+    </select>
+</mapper>

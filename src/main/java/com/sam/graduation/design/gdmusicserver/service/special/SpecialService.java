@@ -1,6 +1,8 @@
 package com.sam.graduation.design.gdmusicserver.service.special;
 
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialAndNumOfMusicInSpecialDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialMusicDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.SpecialDto;
 
 import java.util.List;
@@ -16,5 +18,9 @@ public interface SpecialService {
     List<ArtistSpecialDto> findASLikeSpecialName(String specialName);
 
     List<SpecialDto> findByArtistId(Long artistId);
+
+    ArtistSpecialAndNumOfMusicInSpecialDto findBySpecialId(Long specialId);
+
+    List<ArtistSpecialMusicDto> findMusicInSpecialBySpecialId(Long specialId);
 
 }
