@@ -43,7 +43,7 @@ public class UserMusicListRelatedController extends BaseController {
             @RequestParam(value = "user_id", required = false) Long userId,
             @RequestParam(value = "music_list_name", required = false) String musicListName
     ) {
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("亲，传入的id是空的", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(musicListName)) {
@@ -97,7 +97,7 @@ public class UserMusicListRelatedController extends BaseController {
     public Map<String, Object> findUserMusicListByUserId(
             @RequestParam(value = "user_id", required = false) Long userID
     ) {
-        if (StringUtils.isBlank(String.valueOf(userID.longValue()))) {
+        if (userID == null) {
             return this.error("亲，id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         List<UserUserMusicListAndMusicInItDto> userUserMusicListAndMusicInItDtos = null;
@@ -117,7 +117,7 @@ public class UserMusicListRelatedController extends BaseController {
     public Map<String, Object> findUserMusicListByMusicListId(
             @RequestParam(value = "user_music_list_id", required = false) Long userMusicListId
     ) {
-        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+        if (userMusicListId == null) {
             return this.error("亲，歌单id为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         UserMusicListDto userMusicListDto = null;
@@ -139,8 +139,8 @@ public class UserMusicListRelatedController extends BaseController {
             @RequestParam(value = "user_music_list_name", required = false) String userMusicListName,
             @RequestParam(value = "user_music_list_intro", required = false) String userMusicListIntro
     ) {
-        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
-            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        if (userMusicListId == null) {
+            return this.error("歌单id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(userMusicListName)) {
             return this.error("歌单名不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
@@ -174,7 +174,7 @@ public class UserMusicListRelatedController extends BaseController {
     public Map<String, Object> deleteUserMuscList(
             @RequestParam(value = "user_music_list_id", required = false) Long userMusidListId
     ) {
-        if (StringUtils.isBlank(String.valueOf(userMusidListId.longValue()))) {
+        if (userMusidListId == null) {
             return this.error("歌单id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         MessageDto messageDto = null;
@@ -199,13 +199,13 @@ public class UserMusicListRelatedController extends BaseController {
             @RequestParam(value = "music_id", required = false) Long musicId,
             @RequestParam(value = "user_id", required = false) Long userId
     ) {
-        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+        if (userMusicListId == null) {
             return this.error("用户歌单列表id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+        if (musicId == null) {
             return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         // TODO: 先验证用户是否收藏了歌曲
@@ -242,13 +242,13 @@ public class UserMusicListRelatedController extends BaseController {
             @RequestParam(value = "music_id", required = false) Long musicId,
             @RequestParam(value = "user_id", required = false) Long userId
     ) {
-        if (StringUtils.isBlank(String.valueOf(userMusicListId.longValue()))) {
+        if (userMusicListId == null) {
             return this.error("用户歌单列表id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+        if (musicId == null) {
             return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
 

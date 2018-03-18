@@ -38,6 +38,12 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
     @Autowired
     private SpecialService specialService;
 
+    /**
+     * 根据音乐名获取信息接口
+     *
+     * @param musicName 音乐名称
+     * @return map
+     */
     @ApiOperation("根据音乐名获取信息接口")
     @RequestMapping(value = "/artist/special/music/find/like/music/name/@query", method = RequestMethod.GET)
     public Map<String, Object> artistSpecialMusicFindLikeMusicName(
@@ -58,6 +64,12 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         return this.success(artistSpecialMusicDtos);
     }
 
+    /**
+     * 根据歌手名获取信息接口
+     *
+     * @param artistName 艺人姓名
+     * @return map
+     */
     @ApiOperation("根据歌手名获取信息接口")
     @RequestMapping(value = "/artist/special/music/find/like/artist/name/@query", method = RequestMethod.GET)
     public Map<String, Object> artistSpecialMusicFindLikeArtistName(
@@ -78,6 +90,11 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         return this.success(artistDtos);
     }
 
+    /**
+     * 根据专辑名获取信息接口
+     * @param specialName 专辑名称
+     * @return map
+     */
     @ApiOperation("根据专辑名获取信息接口")
     @RequestMapping(value = "/artist/special/music/find/like/special/name/@query", method = RequestMethod.GET)
     public Map<String, Object> artistSpecialMusicFindLikeSpecialName(
@@ -98,19 +115,24 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         return this.success(artistSpecialDtos);
     }
 
+    /**
+     * 根据音乐id获取单曲信息的接口
+     * @param musicId 音乐id
+     * @return map
+     */
     @ApiOperation("根据音乐id获取单曲信息的接口")
     @RequestMapping(value = "/find/music/by/music/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findMusicByMusicId(
             @RequestParam(value = "music_id", required = false) Long musicId
-    ){
-        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+    ) {
+        if (musicId == null) {
             return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         ArtistSpecialMusicDto artistSpecialMusicDto = null;
         try {
             artistSpecialMusicDto = this.musicService.findMusicByMusicId(musicId);
         } catch (Exception e) {
-            logger.error("e:{}",e);
+            logger.error("e:{}", e);
         }
         if (artistSpecialMusicDto == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);

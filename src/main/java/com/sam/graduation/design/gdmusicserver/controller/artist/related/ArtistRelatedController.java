@@ -27,12 +27,18 @@ public class ArtistRelatedController extends BaseController {
     @Autowired
     private ArtistService artistService;
 
+    /**
+     * 根据艺人id获取艺人信息接口
+     *
+     * @param artistId 艺人id
+     * @return map
+     */
     @ApiOperation("根据艺人id获取艺人信息接口")
     @RequestMapping(value = "/find/artist/by/artist/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findArtistByArtistId(
             @RequestParam(value = "artist_id", required = false) Long artistId
     ) {
-        if (StringUtils.isBlank(String.valueOf(artistId.longValue()))) {
+        if (artistId == null) {
             return this.error("艺人id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         ArtistDto artistDto = null;

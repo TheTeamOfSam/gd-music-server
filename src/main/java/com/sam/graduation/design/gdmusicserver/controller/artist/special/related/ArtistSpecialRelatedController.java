@@ -35,7 +35,7 @@ public class ArtistSpecialRelatedController extends BaseController {
     public Map<String, Object> findSpecialsByArtistId(
             @RequestParam(value = "artist_id", required = false) Long artistId
     ) {
-        if (StringUtils.isBlank(String.valueOf(artistId.longValue()))) {
+        if (artistId == null) {
             return this.error("艺人id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         List<SpecialDto> specialDtos = null;
@@ -55,7 +55,7 @@ public class ArtistSpecialRelatedController extends BaseController {
     public Map<String, Object> findSpecialBySpecialId(
             @RequestParam(value = "special_id", required = false) Long specialId
     ) {
-        if (StringUtils.isBlank(String.valueOf(specialId.longValue()))) {
+        if (specialId == null){
             return this.error("专辑id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         ArtistSpecialAndNumOfMusicInSpecialDto artistSpecialAndNumOfMusicInSpecialDto = null;
@@ -72,17 +72,17 @@ public class ArtistSpecialRelatedController extends BaseController {
 
     @ApiOperation("根据专辑id获取专辑内歌曲列表的接口")
     @RequestMapping(value = "/find/music/in/special/by/special/id/@query", method = RequestMethod.GET)
-    public Map<String, Object> findMusicInSpecialBySpecialId (
-            @RequestParam(value = "special_id",required = false) Long specialId
+    public Map<String, Object> findMusicInSpecialBySpecialId(
+            @RequestParam(value = "special_id", required = false) Long specialId
     ) {
-        if (StringUtils.isBlank(String.valueOf(specialId.longValue()))) {
+        if (specialId == null) {
             return this.error("专辑id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         List<ArtistSpecialMusicDto> artistSpecialMusicDtos = null;
         try {
             artistSpecialMusicDtos = this.specialService.findMusicInSpecialBySpecialId(specialId);
         } catch (Exception e) {
-            logger.error("e:{}",e);
+            logger.error("e:{}", e);
         }
         if (artistSpecialMusicDtos == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);

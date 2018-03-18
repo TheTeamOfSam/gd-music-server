@@ -36,10 +36,10 @@ public class MusicCommentRelatedController extends BaseController {
             @RequestParam(value = "music_id", required = false) Long musicId,
             @RequestParam(value = "comment_content", required = false) String commentContent
     ) {
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+        if (musicId == null) {
             return this.error("歌曲id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(commentContent)) {

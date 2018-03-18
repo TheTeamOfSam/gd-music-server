@@ -5,6 +5,7 @@ import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
 import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
+import com.sam.graduation.design.gdmusicserver.model.enums.related.UserSex;
 import com.sam.graduation.design.gdmusicserver.model.pojo.User;
 import com.sam.graduation.design.gdmusicserver.service.user.UserService;
 import com.sam.graduation.design.gdmusicserver.utils.ConfusionUtil;
@@ -110,7 +111,8 @@ public class UserController extends BaseController {
         if (StringUtils.isBlank(rDOfB)) {
             return this.error("亲，请填写出生日期", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (!((rGender == 1) || (rGender == 2) || (rGender == 3))) {
+        if (!((rGender == UserSex.MALE.value()) || (rGender == UserSex.FEMALE.value()) ||
+                (rGender == UserSex.SECRET.value()))) {
             return this.error("亲，请正确选择性别", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(rProvince)) {
@@ -240,13 +242,14 @@ public class UserController extends BaseController {
             @RequestParam("province") String uProvince,
             @RequestParam("city") String uCity
     ) {
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("亲，你的ID是空的", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(uDOfB)) {
             return this.error("亲，请填写出生日期", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        if (!((uGender == 1) || (uGender == 2) || (uGender == 3))) {
+        if (!((uGender == UserSex.MALE.value()) || (uGender == UserSex.FEMALE.value())
+                || (uGender == UserSex.SECRET.value()))) {
             return this.error("亲，请正确选择性别", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(uProvince)) {
@@ -301,7 +304,7 @@ public class UserController extends BaseController {
             @RequestParam("oldPassword") String oldPassword,
             @RequestParam("newPassword") String newPassword
     ) {
-        if (StringUtils.isBlank(String.valueOf(userId.longValue()))) {
+        if (userId == null) {
             return this.error("亲，用户id不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         if (StringUtils.isBlank(oldPassword)) {
