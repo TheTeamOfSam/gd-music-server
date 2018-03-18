@@ -316,7 +316,7 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
             userMusicList.setMusicListPhoto("");
         } else {
             // TODO: 根据第一首歌的信息去更新掉用户歌单的封面
-            Music music = this.musicMapper.selectByPrimaryKey(musicInUserMusicList.get(0).getMusicId());
+            Music music = this.musicMapper.selectByPrimaryKey(musicInUserMusicList.get(musicInUserMusicList.size() - 1).getMusicId());
             Special special = this.specialMapper.selectByPrimaryKey(music.getSpecialId());
             userMusicList.setMusicListPhoto(special.getSpecialPhoto());
         }
