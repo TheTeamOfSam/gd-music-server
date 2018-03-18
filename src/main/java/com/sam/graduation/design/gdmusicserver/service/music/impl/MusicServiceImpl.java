@@ -95,4 +95,22 @@ public class MusicServiceImpl extends BaseService implements MusicService {
         }
         return artistSpecialMusicDtos;
     }
+
+    @Override
+    public ArtistSpecialMusicDto findMusicByMusicId(Long musicId) {
+        ArtistSpecialMusicDto artistSpecialMusicDto = null;
+
+        ArtistSpecialMusic artistSpecialMusic = null;
+        try {
+            artistSpecialMusic = this.artistSpecialMusicMapper.selectMusicByMusicId(musicId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (artistSpecialMusic == null) {
+            return artistSpecialMusicDto;
+        }
+        artistSpecialMusicDto = new ArtistSpecialMusicDto();
+        artistSpecialMusicDto.from(artistSpecialMusic);
+        return artistSpecialMusicDto;
+    }
 }

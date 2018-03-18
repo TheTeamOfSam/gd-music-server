@@ -15,4 +15,6 @@ public interface MusicService {
 
     List<ArtistSpecialMusicDto> findLikeMusicName(String musicName);
 
+    ArtistSpecialMusicDto findMusicByMusicId(Long musicId);
+
 }

@@ -98,4 +98,24 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         return this.success(artistSpecialDtos);
     }
 
+    @ApiOperation("根据音乐id获取单曲信息的接口")
+    @RequestMapping(value = "/find/music/by/music/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> findMusicByMusicId(
+            @RequestParam(value = "music_id", required = false) Long musicId
+    ){
+        if (StringUtils.isBlank(String.valueOf(musicId.longValue()))) {
+            return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        ArtistSpecialMusicDto artistSpecialMusicDto = null;
+        try {
+            artistSpecialMusicDto = this.musicService.findMusicByMusicId(musicId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (artistSpecialMusicDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(artistSpecialMusicDto);
+    }
+
 }

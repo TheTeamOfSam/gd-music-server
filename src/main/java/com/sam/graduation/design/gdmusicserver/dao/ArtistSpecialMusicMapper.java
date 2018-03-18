@@ -24,4 +24,8 @@ public interface ArtistSpecialMusicMapper {
             @Param("special_id") Long specialId
     );
 
+    ArtistSpecialMusic selectMusicByMusicId(
+            @Param("music_id") Long musicId
+    );
+
 }
