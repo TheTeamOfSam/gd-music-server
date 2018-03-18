@@ -146,4 +146,11 @@
       WHERE special_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
     </if>
   </select>
+  <select id="selectByArtistId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT *
+    FROM special
+    <if test="artist_id != null">
+      WHERE artist_id = #{artist_id,jdbcType=BIGINT}
+    </if>
+  </select>
 </mapper>

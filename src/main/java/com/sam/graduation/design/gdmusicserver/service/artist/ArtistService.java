@@ -12,4 +12,6 @@ public interface ArtistService {
 
     List<ArtistDto> findLikeArtistName(String artistName);
 
+    ArtistDto findByArtistId(Long artistId);
+
 }

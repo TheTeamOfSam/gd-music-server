@@ -22,4 +22,8 @@ public interface SpecialMapper {
             @Param("special_name") String specialName
     );
 
+    List<Special> selectByArtistId(
+            @Param("artist_id") Long artistId
+    );
+
 }

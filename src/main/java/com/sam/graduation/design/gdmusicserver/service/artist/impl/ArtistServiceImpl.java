@@ -43,4 +43,23 @@ public class ArtistServiceImpl extends BaseService implements ArtistService {
         }
         return artistDtos;
     }
+
+    @Override
+    public ArtistDto findByArtistId(Long artistId) {
+
+        ArtistDto artistDto = null;
+
+        Artist artist = null;
+        try {
+            artist = this.artistMapper.selectByPrimaryKey(artistId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (artist == null) {
+//            return artistDto;
+        }
+        artistDto = new ArtistDto();
+        artistDto.from(artist);
+        return artistDto;
+    }
 }

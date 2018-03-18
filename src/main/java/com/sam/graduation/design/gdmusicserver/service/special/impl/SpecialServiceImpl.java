@@ -72,4 +72,27 @@ public class SpecialServiceImpl extends BaseService implements SpecialService {
         }
         return artistSpecialDtos;
     }
+
+    @Override
+    public List<SpecialDto> findByArtistId(Long artistId) {
+        List<SpecialDto> specialDtos = null;
+
+        List<Special> specials = null;
+        try {
+            specials = this.specialMapper.selectByArtistId(artistId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (specials == null) {
+            specialDtos = new ArrayList<SpecialDto>();
+            return specialDtos;
+        }
+        specialDtos = new ArrayList<SpecialDto>();
+        for (Special special: specials) {
+            SpecialDto specialDto = new SpecialDto();
+            specialDto.from(special);
+            specialDtos.add(specialDto);
+        }
+        return specialDtos;
+    }
 }

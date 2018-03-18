@@ -15,4 +15,6 @@ public interface SpecialService {
 
     List<ArtistSpecialDto> findASLikeSpecialName(String specialName);
 
+    List<SpecialDto> findByArtistId(Long artistId);
+
 }
