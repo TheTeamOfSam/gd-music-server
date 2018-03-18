@@ -4,7 +4,6 @@ import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MusicCommentDto;
-import com.sam.graduation.design.gdmusicserver.controller.pub.AppException;
 import com.sam.graduation.design.gdmusicserver.service.music.comment.MusicCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
