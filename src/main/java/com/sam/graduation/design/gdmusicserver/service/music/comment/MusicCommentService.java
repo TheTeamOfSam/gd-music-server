@@ -2,6 +2,9 @@ package com.sam.graduation.design.gdmusicserver.service.music.comment;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MusicCommentDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicCommentAndLCDto;
+
+import java.util.List;
 
 /**
  * @author sam199510 273045049@qq.com
@@ -10,5 +13,10 @@ import com.sam.graduation.design.gdmusicserver.controller.dto.MusicCommentDto;
 public interface MusicCommentService {
 
     MessageDto commentMusic(MusicCommentDto musicCommentDto);
+
+    List<UserMusicCommentAndLCDto> findUserMusicCommentAndLC(
+            Long userId,
+            Long musicId
+    );
 
 }

@@ -4,6 +4,7 @@ import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MusicCommentDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserMusicCommentAndLCDto;
 import com.sam.graduation.design.gdmusicserver.service.music.comment.MusicCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,5 +70,28 @@ public class MusicCommentRelatedController extends BaseController {
         }
         return this.success(messageDto);
     }
+
+
+    @ApiOperation("音乐评论显示相关接口")
+    @RequestMapping(value = "/get/music/comment/by/music/id/or/user/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> getMusicCommentByMusicIdOrUserId(
+            @RequestParam(value = "user_id", required = false) Long userId,
+            @RequestParam(value = "music_id", required = false) Long musicId
+    ) {
+        if (musicId == null) {
+            return this.error("音乐id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<UserMusicCommentAndLCDto> userMusicCommentAndLCDtos = null;
+        try {
+            userMusicCommentAndLCDtos = this.musicCommentService.findUserMusicCommentAndLC(userId, musicId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userMusicCommentAndLCDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userMusicCommentAndLCDtos);
+    }
+
 
 }
