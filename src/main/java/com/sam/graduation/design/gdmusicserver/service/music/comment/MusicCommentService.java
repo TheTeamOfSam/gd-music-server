@@ -19,4 +19,18 @@ public interface MusicCommentService {
             Long musicId
     );
 
+    MessageDto likeMusicComment(
+            Long musicCommentId,
+            Long userId
+    );
+
+    MessageDto unLikeMusicComment(
+            Long musicCommentId,
+            Long userId
+    );
+
+    MessageDto deleteMusicComment(
+            Long musicCommentId
+    );
+
 }

@@ -120,4 +120,13 @@
     WHERE user_id = #{user_id,jdbcType=BIGINT}
     AND comment_id = #{comment_id,jdbcType=BIGINT}
   </select>
+  <delete id="deleteALikeComment" parameterType="java.lang.Long">
+    DELETE FROM like_comment
+    WHERE user_id = #{user_id,jdbcType=BIGINT}
+    AND comment_id = #{comment_id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteLikeCommentByMusicCommentId" parameterType="java.lang.Long">
+    DELETE FROM like_comment
+    WHERE comment_id = #{comment_id,jdbcType=BIGINT}
+  </delete>
 </mapper>

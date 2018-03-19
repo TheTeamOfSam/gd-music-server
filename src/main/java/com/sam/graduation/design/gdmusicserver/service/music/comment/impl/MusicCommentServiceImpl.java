@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -149,10 +150,93 @@ public class MusicCommentServiceImpl extends BaseService implements MusicComment
         }
     }
 
-    public static void main(String[] args) {
-        Long a = 100000L;
-        Long b = 100000L;
-        System.out.println(a.equals(b));
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto likeMusicComment(Long musicCommentId, Long userId) {
+        MessageDto messageDto = null;
+
+        LikeComment likeComment = new LikeComment();
+        likeComment.setUserId(userId);
+        likeComment.setCommentId(musicCommentId);
+        likeComment.setLikeTime(new Date());
+        likeComment.setCreatedTime(new Date());
+        likeComment.setLastModifiedTime(new Date());
+        likeComment.setIsDelete((byte) 0);
+
+        int likeCommentResult = 0;
+
+        try {
+            likeCommentResult = this.likeCommentMapper.insertSelective(likeComment);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+            throw new AppException("点赞评论异常");
+        }
+        if (likeCommentResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setMessage("点赞评论错误");
+            messageDto.setSuccess(false);
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setMessage("点赞该评论成功");
+        messageDto.setSuccess(true);
+        return messageDto;
     }
 
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto unLikeMusicComment(Long musicCommentId, Long userId) {
+        MessageDto messageDto = null;
+
+        int unLikeCommentResult = 0;
+
+        try {
+            unLikeCommentResult = this.likeCommentMapper.deleteALikeComment(userId, musicCommentId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+            throw new AppException("取消点赞异常");
+        }
+        if (unLikeCommentResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setMessage("取消点赞错误");
+            messageDto.setSuccess(false);
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setMessage("取消点赞该评论成功");
+        messageDto.setSuccess(true);
+        return messageDto;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto deleteMusicComment(Long musicCommentId) {
+        MessageDto messageDto = null;
+
+        int deleteMusicCommentResult = 0;
+        int deleteLikeMusicCommentResult = 0;
+
+        try {
+            deleteMusicCommentResult = this.musicCommentMapper.deleteByPrimaryKey(musicCommentId);
+            deleteLikeMusicCommentResult = this.likeCommentMapper.deleteLikeCommentByMusicCommentId(musicCommentId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+            throw new AppException("删除评论或点赞评论异常");
+        }
+        if (deleteLikeMusicCommentResult == 0) {
+
+        } else {
+
+        }
+        if (deleteMusicCommentResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setMessage("删除音乐评论错误");
+            messageDto.setSuccess(false);
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setMessage("删除音乐评论成功");
+        messageDto.setSuccess(true);
+        return messageDto;
+    }
 }

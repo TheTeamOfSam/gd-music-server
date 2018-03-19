@@ -20,4 +20,13 @@ public interface LikeCommentMapper {
             @Param("user_id") Long userId,
             @Param("comment_id") Long commentId
     );
+
+    int deleteALikeComment(
+            @Param("user_id") Long userId,
+            @Param("comment_id") Long commentId
+    );
+
+    int deleteLikeCommentByMusicCommentId(
+            @Param("comment_id") Long commentId
+    );
 }

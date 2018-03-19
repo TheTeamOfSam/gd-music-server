@@ -93,5 +93,82 @@ public class MusicCommentRelatedController extends BaseController {
         return this.success(userMusicCommentAndLCDtos);
     }
 
+    @ApiOperation("音乐评论点赞接口")
+    @RequestMapping(value = "/like/music/comment/@like", method = RequestMethod.POST)
+    public Map<String, Object> likeMusicComment(
+            @RequestParam(value = "music_comment_id", required = false) Long musicCommentId,
+            @RequestParam(value = "user_id", required = false) Long userId
+    ) {
+        if (musicCommentId == null) {
+            return this.error("评论id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (userId == null) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.musicCommentService.likeMusicComment(musicCommentId, userId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
+
+
+    @ApiOperation("音乐评论取消点赞接口")
+    @RequestMapping(value = "/un/like/music/comment/@unlike", method = RequestMethod.POST)
+    public Map<String, Object> unLikeMusicComment(
+            @RequestParam(value = "music_comment_id", required = false) Long musicCommentId,
+            @RequestParam(value = "user_id", required = false) Long userId
+    ) {
+        if (musicCommentId == null) {
+            return this.error("评论id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (userId == null) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.musicCommentService.unLikeMusicComment(musicCommentId, userId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
+
+    @ApiOperation("删除音乐评论接口")
+    @RequestMapping(value = "/delete/music/comment/@delete", method = RequestMethod.POST)
+    public Map<String, Object> deleteMusicComment(
+            @RequestParam(value = "music_comment_id", required = false) Long musicCommentId
+    ) {
+        if (musicCommentId == null) {
+            return this.error("音乐评论id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        MessageDto messageDto = null;
+        try {
+            messageDto = this.musicCommentService.deleteMusicComment(musicCommentId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (messageDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        if (!messageDto.isSuccess()) {
+            return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        return this.success(messageDto);
+    }
 
 }
