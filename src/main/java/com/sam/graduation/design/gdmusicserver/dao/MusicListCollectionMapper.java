@@ -20,4 +20,8 @@ public interface MusicListCollectionMapper {
             @Param("user_id") Long userId,
             @Param("user_music_list_id") Long userMusicListId
     );
+
+    int deleteByUserMusicListId(
+            @Param("user_music_list_id") Long userMusicListId
+    );
 }

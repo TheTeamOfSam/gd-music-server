@@ -58,6 +58,9 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
     @Autowired
     private MusicInUserMusicListMapper musicInUserMusicListMapper;
 
+    @Autowired
+    private MusicListCollectionMapper musicListCollectionMapper;
+
     @Override
     public MessageDto userMusicListCreate(UserMusicListDto userMusicListDto) {
         MessageDto dto = null;
@@ -207,9 +210,11 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         MessageDto messageDto = null;
         int deleteUserMusicListResult;
         int deleteMusicInUserMusicListResult;
+        int deleteMusicCollectionResult;
         try {
             deleteUserMusicListResult = this.userMusicListMapper.deleteByPrimaryKey(userMusicListId);
             deleteMusicInUserMusicListResult = this.musicInUserMusicListMapper.deleteByUserMusicListId(userMusicListId);
+            deleteMusicCollectionResult = this.musicListCollectionMapper.deleteByUserMusicListId(userMusicListId);
         } catch (Exception e) {
             logger.error("e:{}", e);
             throw new AppException("删除歌单内歌曲和歌单出错！");
@@ -221,6 +226,11 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
             return messageDto;
         }
         if (deleteMusicInUserMusicListResult == 0) {
+
+        } else {
+
+        }
+        if (deleteMusicCollectionResult == 0) {
 
         } else {
 

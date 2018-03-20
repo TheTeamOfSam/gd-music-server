@@ -4,6 +4,7 @@ import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MusicListCollectionDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserUserMusicListAndMusicInItDto;
 import com.sam.graduation.design.gdmusicserver.dao.MusicListCollectionMapper;
 import com.sam.graduation.design.gdmusicserver.dao.UserMusicListMapper;
 import com.sam.graduation.design.gdmusicserver.model.pojo.MusicListCollection;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,5 +83,25 @@ public class MusicListCollectionRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    @ApiOperation("显示收藏别的用户创建的歌单的接口")
+    @RequestMapping(value = "/show/collected/other/user/music/list/by/user/id/@query", method = RequestMethod.GET)
+    public Map<String, Object> showCollectedOtherUserMusicListByUserId(
+            @RequestParam(value = "user_id", required = false) Long userId
+    ) {
+        if (userId == null) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        List<UserUserMusicListAndMusicInItDto> userUserMusicListAndMusicInItDtos = null;
+        try {
+            userUserMusicListAndMusicInItDtos = this.musicListCollectionService.showMyCollectByUserId(userId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userUserMusicListAndMusicInItDtos == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userUserMusicListAndMusicInItDtos);
+
+    }
 
 }

@@ -42,29 +42,70 @@
     </select>
     <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-        u.id                                  AS user_id,
-        u.nickname                            AS user_nickname,
-        u.head_photo                          AS user_head_photo,
-        umsl.id                               AS user_music_list_id,
-        umsl.music_list_name                  AS user_music_list_name,
-        umsl.music_list_photo                 AS user_music_list_photo,
-        umsl.intro                            AS user_music_list_intro,
-        umsl.generate_time                    AS user_music_list_created_time,
-        nouml.num_of_music_in_user_music_list AS num_of_music_in_user_music_list
+            u.id                                  AS user_id,
+            u.nickname                            AS user_nickname,
+            u.head_photo                          AS user_head_photo,
+            umsl.id                               AS user_music_list_id,
+            umsl.music_list_name                  AS user_music_list_name,
+            umsl.music_list_photo                 AS user_music_list_photo,
+            umsl.intro                            AS user_music_list_intro,
+            umsl.generate_time                    AS user_music_list_created_time,
+            nouml.num_of_music_in_user_music_list AS num_of_music_in_user_music_list
         FROM
-        user             u,
-        user_music_list  umsl,
-        (
-        SELECT
-        uml.id                                                  AS  user_music_list_id,
-        count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END)  AS  num_of_music_in_user_music_list
-        FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
-        GROUP BY uml.id
-        ORDER BY uml.id ASC
-        )                nouml
+            user             u,
+            user_music_list  umsl,
+            (
+            SELECT
+            uml.id                                                  AS  user_music_list_id,
+            count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END)  AS  num_of_music_in_user_music_list
+            FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
+            GROUP BY uml.id
+            ORDER BY uml.id ASC
+            )                nouml
         WHERE u.id = umsl.user_id AND umsl.id = nouml.user_music_list_id
         <if test="user_id != null">
             AND umsl.user_id = #{user_id,jdbcType=BIGINT}
         </if>
+    </select>
+    <select id="selectMusicListCollectionByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+              all_user_music_list.user_id                         AS user_id,
+              all_user_music_list.user_nickname                   AS user_nickname,
+              all_user_music_list.user_head_photo                 AS user_head_photo,
+              all_user_music_list.user_music_list_id              AS user_music_list_id,
+              all_user_music_list.user_music_list_name            AS user_music_list_name,
+              all_user_music_list.user_music_list_photo           AS user_music_list_photo,
+              all_user_music_list.user_music_list_intro           AS user_music_list_intro,
+              all_user_music_list.user_music_list_created_time    AS user_music_list_created_time,
+              all_user_music_list.num_of_music_in_user_music_list AS num_of_music_in_user_music_list
+        FROM
+              user usr,
+              music_list_collection mlc,
+              (SELECT
+                     u.id                                  AS user_id,
+                     u.nickname                            AS user_nickname,
+                     u.head_photo                          AS user_head_photo,
+                     umsl.id                               AS user_music_list_id,
+                     umsl.music_list_name                  AS user_music_list_name,
+                     umsl.music_list_photo                 AS user_music_list_photo,
+                     umsl.intro                            AS user_music_list_intro,
+                     umsl.generate_time                    AS user_music_list_created_time,
+                     nouml.num_of_music_in_user_music_list AS num_of_music_in_user_music_list
+               FROM
+                     user u,
+                     user_music_list umsl,
+                     (SELECT
+                         uml.id                                                 AS user_music_list_id,
+                         count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END) AS num_of_music_in_user_music_list
+                       FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
+                       GROUP BY uml.id
+                       ORDER BY uml.id ASC
+                     ) nouml
+                WHERE u.id = umsl.user_id
+                AND umsl.id = nouml.user_music_list_id
+              ) all_user_music_list
+        WHERE usr.id = mlc.user_id
+        AND mlc.user_music_list_id = all_user_music_list.user_music_list_id
+        AND usr.id = #{user_id,jdbcType=BIGINT}
     </select>
 </mapper>
