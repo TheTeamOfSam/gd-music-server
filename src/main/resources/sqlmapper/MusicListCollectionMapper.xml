@@ -125,4 +125,9 @@
     DELETE FROM music_list_collection
     WHERE user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByUserMusicListIdAndUserId" parameterType="java.lang.Long">
+      DELETE FROM music_list_collection
+      WHERE user_id = #{user_id,jdbcType=BIGINT}
+      AND user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+  </delete>
 </mapper>

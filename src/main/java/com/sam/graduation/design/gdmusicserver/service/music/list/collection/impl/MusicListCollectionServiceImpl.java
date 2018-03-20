@@ -104,4 +104,29 @@ public class MusicListCollectionServiceImpl extends BaseService implements Music
         }
         return userUserMusicListAndMusicInItDtos;
     }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public MessageDto unCollectOtherUserMusicListIntoMyCollect(Long userId, Long userMusicListId) {
+        MessageDto messageDto = null;
+
+        int unCollectResult;
+
+        try {
+            unCollectResult = this.musicListCollectionMapper.deleteByUserMusicListIdAndUserId(userId, userMusicListId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+            throw new AppException("取消收藏用户歌单异常");
+        }
+        if (unCollectResult == 0) {
+            messageDto = new MessageDto();
+            messageDto.setSuccess(false);
+            messageDto.setMessage("取消收藏用户歌单错误");
+            return messageDto;
+        }
+        messageDto = new MessageDto();
+        messageDto.setSuccess(true);
+        messageDto.setMessage("取消收藏用户歌单成功");
+        return messageDto;
+    }
 }

@@ -20,4 +20,9 @@ public interface MusicListCollectionService {
             Long userId
     );
 
+    MessageDto unCollectOtherUserMusicListIntoMyCollect(
+            Long userId,
+            Long userMusicListId
+    );
+
 }
