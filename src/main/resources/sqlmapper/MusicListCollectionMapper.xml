@@ -15,7 +15,7 @@
     is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from music_list_collection
     where id = #{id,jdbcType=BIGINT}
@@ -115,4 +115,10 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectMusicListCollectionByUserIdAndUserMusicListId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT *
+    FROM music_list_collection
+    WHERE user_id = #{user_id,jdbcType=BIGINT}
+    AND user_music_list_id = #{user_music_list_id,jdbcType=BIGINT}
+  </select>
 </mapper>
