@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.graduation.design.gdmusicserver.dao.UserAndCreatedMLAndCollectedMLMapper">
+    <resultMap id="BaseResultMap"
+               type="com.sam.graduation.design.gdmusicserver.model.pojo.UserAndCreatedMLAndCollectedML">
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_nickname" jdbcType="VARCHAR" property="userNickname"/>
+        <result column="user_introduction" jdbcType="VARCHAR" property="userIntroduction"/>
+        <result column="user_sex" jdbcType="TINYINT" property="userSex"/>
+        <result column="user_date_of_birth" jdbcType="TIMESTAMP" property="userDateOfBirth"/>
+        <result column="user_province" jdbcType="VARCHAR" property="userProvince"/>
+        <result column="user_city" jdbcType="VARCHAR" property="userCity"/>
+        <result column="user_head_photo" jdbcType="VARCHAR" property="userHeadPhoto"/>
+        <result column="num_of_user_created_music_list" jdbcType="INTEGER" property="numOfUserCreatedMusicList"/>
+        <result column="num_of_user_collected_music_list" jdbcType="INTEGER" property="numOfUserCollectedMusicList"/>
+    </resultMap>
+    <select id="selectUserAndCreatedMLAndCollectedMLByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+          usr.id                           AS user_id,
+          usr.nickname                     AS user_nickname,
+          usr.introduction                 AS user_introduction,
+          usr.sex                          AS user_sex,
+          usr.date_of_birth                AS user_date_of_birth,
+          usr.province                     AS user_province,
+          usr.city                         AS user_city,
+          usr.head_photo                   AS user_head_photo,
+          uuml.num_of_user_music_list      AS num_of_user_created_music_list,
+          umlc.num_of_collected_music_list AS num_of_user_collected_music_list
+        FROM
+          user usr,
+          (SELECT
+             u.id                                                        AS user_id,
+             count(CASE WHEN uml.music_list_name IS NOT NULL THEN 1 END) AS num_of_user_music_list
+           FROM user u LEFT JOIN user_music_list uml ON u.id = uml.user_id
+           GROUP BY u.id) uuml,
+          (SELECT
+             u.id          AS user_id,
+             count(CASE WHEN mlc.user_music_list_id IS NOT NULL
+               THEN 1 END) AS num_of_collected_music_list
+           FROM user u LEFT JOIN music_list_collection mlc ON u.id = mlc.user_id
+           GROUP BY u.id) umlc
+        WHERE usr.id = uuml.user_id AND usr.id = umlc.user_id
+        <if test="user_id != null">
+            AND usr.id = #{user_id,jdbcType=BIGINT}
+        </if>
+    </select>
+</mapper>

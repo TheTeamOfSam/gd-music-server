@@ -3,6 +3,7 @@ package com.sam.graduation.design.gdmusicserver.controller.user.related;
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
 import com.sam.graduation.design.gdmusicserver.controller.base.BaseController;
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserAndCreatedMLAndCollectedMLDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
 import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
 import com.sam.graduation.design.gdmusicserver.model.enums.related.UserSex;
@@ -371,5 +372,24 @@ public class UserController extends BaseController {
         return this.success(userDtos);
     }
 
+    @ApiOperation("根据用户id获取用户页面的基本信息和歌单数量信息的接口")
+    @RequestMapping(value = "/show/user/page/info/and/num/of/created/and/collected/@query", method = RequestMethod.GET)
+    public Map<String, Object> showUserPageInfoAndNumOfCreatedAndCollected(
+            @RequestParam(value = "user_id", required = false) Long userId
+    ) {
+        if (userId == null) {
+            return this.error("用户id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        UserAndCreatedMLAndCollectedMLDto userAndCreatedMLAndCollectedMLDto = null;
+        try {
+            userAndCreatedMLAndCollectedMLDto = this.userService.findUserAndCreatedMLAndCollectedMLByUserId(userId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userAndCreatedMLAndCollectedMLDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userAndCreatedMLAndCollectedMLDto);
+    }
 
 }

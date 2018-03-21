@@ -99,13 +99,14 @@
                          count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END) AS num_of_music_in_user_music_list
                        FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
                        GROUP BY uml.id
-                       ORDER BY uml.id ASC
                      ) nouml
                 WHERE u.id = umsl.user_id
                 AND umsl.id = nouml.user_music_list_id
               ) all_user_music_list
         WHERE usr.id = mlc.user_id
         AND mlc.user_music_list_id = all_user_music_list.user_music_list_id
-        AND usr.id = #{user_id,jdbcType=BIGINT}
+        <if test="user_id != null">
+            AND usr.id = #{user_id,jdbcType=BIGINT}
+        </if>
     </select>
 </mapper>

@@ -1,10 +1,13 @@
 package com.sam.graduation.design.gdmusicserver.service.user.impl;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserAndCreatedMLAndCollectedMLDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
+import com.sam.graduation.design.gdmusicserver.dao.UserAndCreatedMLAndCollectedMLMapper;
 import com.sam.graduation.design.gdmusicserver.dao.UserMapper;
 import com.sam.graduation.design.gdmusicserver.model.enums.related.UserSex;
 import com.sam.graduation.design.gdmusicserver.model.pojo.User;
+import com.sam.graduation.design.gdmusicserver.model.pojo.UserAndCreatedMLAndCollectedML;
 import com.sam.graduation.design.gdmusicserver.service.base.BaseService;
 import com.sam.graduation.design.gdmusicserver.service.user.UserService;
 import com.sam.graduation.design.gdmusicserver.utils.ConfusionUtil;
@@ -49,8 +52,15 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Value("${head.image.path}")
     private String headImagePath;
 
+    // 默认头像链接
+    @Value("${default.head.photo}")
+    private String defaultHeadPhoto;
+
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserAndCreatedMLAndCollectedMLMapper userAndCreatedMLAndCollectedMLMapper;
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
@@ -256,5 +266,31 @@ public class UserServiceImpl extends BaseService implements UserService {
             userDtos.add(userDto);
         }
         return userDtos;
+    }
+
+    @Override
+    public UserAndCreatedMLAndCollectedMLDto findUserAndCreatedMLAndCollectedMLByUserId(Long userId) {
+
+        UserAndCreatedMLAndCollectedMLDto userAndCreatedMLAndCollectedMLDto = null;
+
+        UserAndCreatedMLAndCollectedML userAndCreatedMLAndCollectedML = null;
+        try {
+            userAndCreatedMLAndCollectedML = this.userAndCreatedMLAndCollectedMLMapper
+                    .selectUserAndCreatedMLAndCollectedMLByUserId(userId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (userAndCreatedMLAndCollectedML == null) {
+            return userAndCreatedMLAndCollectedMLDto;
+        }
+        userAndCreatedMLAndCollectedMLDto = new UserAndCreatedMLAndCollectedMLDto();
+        userAndCreatedMLAndCollectedMLDto.from(userAndCreatedMLAndCollectedML);
+        if (StringUtils.isBlank(userAndCreatedMLAndCollectedML.getUserHeadPhoto())) {
+            userAndCreatedMLAndCollectedMLDto.setUserHeadPhoto(defaultHeadPhoto);
+        } else {
+            userAndCreatedMLAndCollectedMLDto.setUserHeadPhoto(urlLink + FILE_SEPARATOR
+                    + userAndCreatedMLAndCollectedML.getUserHeadPhoto());
+        }
+        return userAndCreatedMLAndCollectedMLDto;
     }
 }

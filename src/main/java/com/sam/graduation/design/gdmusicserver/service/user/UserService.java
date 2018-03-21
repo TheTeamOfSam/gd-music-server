@@ -1,6 +1,7 @@
 package com.sam.graduation.design.gdmusicserver.service.user;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.MessageDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.UserAndCreatedMLAndCollectedMLDto;
 import com.sam.graduation.design.gdmusicserver.controller.dto.UserDto;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,5 +25,7 @@ public interface UserService {
     MessageDto userHeadPhotoUpdate(Long userID, MultipartFile headPhoto);
 
     List<UserDto> findUserLikeNickName(String nickname);
+
+    UserAndCreatedMLAndCollectedMLDto findUserAndCreatedMLAndCollectedMLByUserId(Long userId);
 
 }
