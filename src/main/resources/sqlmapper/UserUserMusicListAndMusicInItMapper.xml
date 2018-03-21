@@ -109,4 +109,28 @@
             AND usr.id = #{user_id,jdbcType=BIGINT}
         </if>
     </select>
+    <select id="selectUserMusicListByUserMusicListId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+          u.id                                AS user_id,
+          u.nickname                          AS user_nickname,
+          u.head_photo                        AS user_head_photo,
+          uml.id                              AS user_music_list_id,
+          uml.music_list_name                 AS user_music_list_name,
+          uml.music_list_photo                AS user_music_list_photo,
+          uml.intro                           AS user_music_list_intro,
+          uml.generate_time                   AS user_music_list_created_time,
+          umlmiuml.num_of_music_in_music_list AS num_of_music_in_user_music_list
+        FROM
+          user u,
+          user_music_list uml,
+          (SELECT
+             uml.id                                                 AS user_music_list_id,
+             count(CASE WHEN miuml.music_id IS NOT NULL THEN 1 END) AS num_of_music_in_music_list
+           FROM user_music_list uml LEFT JOIN music_in_user_music_list miuml ON uml.id = miuml.user_music_list_id
+           GROUP BY uml.id) umlmiuml
+        WHERE u.id = uml.user_id AND uml.id = umlmiuml.user_music_list_id
+        <if test="user_music_list_id != null">
+            AND uml.id = #{user_music_list_id,jdbcType=BIGINT}
+        </if>
+    </select>
 </mapper>

@@ -351,4 +351,35 @@ public class UserMusicListServiceImpl extends BaseService implements UserMusicLi
         messageDto.setMessage("删除歌曲成功");
         return messageDto;
     }
+
+    @Override
+    public UserUserMusicListAndMusicInItDto findUserMusicListByMusicListId(Long userMusicListId) {
+        UserUserMusicListAndMusicInItDto userUserMusicListAndMusicInItDto = null;
+
+        UserUserMusicListAndMusicInIt userUserMusicListAndMusicInIt = null;
+        try {
+            userUserMusicListAndMusicInIt = this.userUserMusicListAndMusicInItMapper
+                    .selectUserMusicListByUserMusicListId(userMusicListId);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userUserMusicListAndMusicInIt == null) {
+            return userUserMusicListAndMusicInItDto;
+        }
+        userUserMusicListAndMusicInItDto = new UserUserMusicListAndMusicInItDto();
+        userUserMusicListAndMusicInItDto.from(userUserMusicListAndMusicInIt);
+        if (StringUtils.isBlank(userUserMusicListAndMusicInIt.getUserHeadPhoto())) {
+            userUserMusicListAndMusicInItDto.setUserHeadPhoto(defaultHeadPhoto);
+        } else {
+            userUserMusicListAndMusicInItDto.setUserHeadPhoto(urlLink + FILE_SEPARATOR + userUserMusicListAndMusicInIt
+                    .getUserHeadPhoto());
+        }
+        if (StringUtils.isBlank(userUserMusicListAndMusicInIt.getUserMusicListPhoto())) {
+            userUserMusicListAndMusicInItDto.setUserMusicListPhoto(blankUserMusicListPhotoUrlLink);
+        } else {
+            userUserMusicListAndMusicInItDto.setUserMusicListPhoto(userUserMusicListAndMusicInIt
+                    .getUserMusicListPhoto());
+        }
+        return userUserMusicListAndMusicInItDto;
+    }
 }

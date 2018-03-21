@@ -23,4 +23,8 @@ public interface UserUserMusicListAndMusicInItMapper {
             @Param("user_id") Long userId
     );
 
+    UserUserMusicListAndMusicInIt selectUserMusicListByUserMusicListId(
+            @Param("user_music_list_id") Long userMusicListId
+    );
+
 }

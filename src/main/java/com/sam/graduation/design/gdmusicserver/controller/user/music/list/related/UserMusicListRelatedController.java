@@ -272,4 +272,24 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    @ApiOperation("显示一个歌单的具体信息的接口")
+    @RequestMapping(value = "/show/a/user/music/list/by/user/music/list/id/@query",method = RequestMethod.GET)
+    public Map<String, Object> showAUserMusicListByUserMusicListId(
+            @RequestParam(value = "user_music_list_id",required = false) Long userMusicListId
+    ) {
+        if (userMusicListId == null) {
+            return this.error("用户歌单id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        UserUserMusicListAndMusicInItDto userUserMusicListAndMusicInItDto = null;
+        try {
+            userUserMusicListAndMusicInItDto = this.userMusicListService.findUserMusicListByMusicListId(userMusicListId);
+        } catch (Exception e) {
+            logger.error("e:{}",e);
+        }
+        if (userUserMusicListAndMusicInItDto == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userUserMusicListAndMusicInItDto);
+    }
+
 }
