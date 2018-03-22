@@ -119,4 +119,37 @@
             AND m.id = #{music_id,jdbcType=BIGINT}
         </if>
     </select>
+    <select id="selectMusicByUserMusicListId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            a.id AS artist_id,
+            a.artist_name AS artist_name,
+            a.artist_other_name AS artist_other_name,
+            a.intro AS artist_intro,
+            a.artist_head_photo_big AS artist_head_photo_big,
+            a.artist_head_photo_small AS artist_head_photo_small,
+            s.id AS special_id,
+            s.special_name AS special_name,
+            s.publish_company AS special_publish_company,
+            s.publish_time AS special_publish_time,
+            s.special_photo AS special_photo,
+            m.id AS music_id,
+            m.music_name AS music_name,
+            m.music_path AS music_path,
+            m.music_duration AS music_duration
+        FROM
+            user_music_list uml,
+            music_in_user_music_list miuml ,
+            music m,
+            special s,
+            artist a
+        WHERE
+            uml.id = miuml.user_music_list_id
+            AND miuml.music_id = m.id
+            AND m.special_id = s.id
+            AND s.artist_id = a.id
+            <if test="user_music_list_id != null">
+                AND uml.id = #{user_music_list_id,jdbcType=BIGINT}
+            </if>
+        ORDER BY miuml.collected_time DESC
+    </select>
 </mapper>

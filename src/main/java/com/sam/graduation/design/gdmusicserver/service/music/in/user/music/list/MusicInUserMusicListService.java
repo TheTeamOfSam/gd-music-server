@@ -12,4 +12,6 @@ public interface MusicInUserMusicListService {
 
     List<ArtistSpecialMusicDto> showMyMusicList(Long userId, Long musicListId);
 
+    List<ArtistSpecialMusicDto> findMusicByUserMusicListId(Long userMusicListId);
+
 }
