@@ -41,6 +41,7 @@ public class ArtistRelatedController extends BaseController {
         if (artistId == null) {
             return this.error("艺人id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
+
         ArtistDto artistDto = null;
         try {
             artistDto = this.artistService.findByArtistId(artistId);
