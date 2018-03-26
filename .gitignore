@@ -63,3 +63,4 @@ target/classes/logback-spring.xml
 target/test-classes/com/sam/graduation/design/gdmusicserver/GdMusicServerApplicationTests.class
 gd-music-server.iml
 .classpath
+.project
