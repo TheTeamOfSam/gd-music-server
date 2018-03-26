@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 艺人、专辑和音乐相关控制器
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/11 21:57:59
  */

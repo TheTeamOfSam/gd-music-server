@@ -18,6 +18,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import java.lang.reflect.Method;
 
 /**
+ * Redis 配置
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/11 13:30:50
  */

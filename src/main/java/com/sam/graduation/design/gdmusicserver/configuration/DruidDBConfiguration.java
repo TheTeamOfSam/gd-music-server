@@ -15,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 /**
+ * Druid数据库连接池配置
  * @author sam199510 273045049@qq.com
  * @version 创建时间：2018/1/29 14:16:19
  */

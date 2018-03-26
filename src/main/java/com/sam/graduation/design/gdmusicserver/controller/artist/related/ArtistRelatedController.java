@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
+ * 艺人相关控制器类
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/18 12:54:18
  */

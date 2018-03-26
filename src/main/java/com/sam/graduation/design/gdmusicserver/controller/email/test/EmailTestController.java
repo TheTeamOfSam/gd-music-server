@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 邮箱测试类
+ *
  * @author sam199510 273045049@qq.com
  * @version 创建时间：2018/1/30 12:10:29
  */
@@ -22,6 +24,12 @@ public class EmailTestController {
     @Autowired
     private EmailService emailService;
 
+    /**
+     * 邮箱feign获取测试接口
+     *
+     * @param email 邮箱
+     * @return EmailResponseDto
+     */
     @ApiOperation("邮箱feign获取测试接口")
     @RequestMapping(value = "/email/get/@get", method = RequestMethod.POST)
     public EmailResponseDto getEmailCode(
@@ -30,9 +38,16 @@ public class EmailTestController {
         return this.emailService.sendEmailCode(email);
     }
 
+    /**
+     * 邮箱feign验证测试接口
+     *
+     * @param email 邮箱
+     * @param code  验证码
+     * @return EmailResponseDto
+     */
     @ApiOperation("邮箱feign验证测试接口")
     @RequestMapping(value = "/email/check/@check", method = RequestMethod.POST)
-    public EmailResponseDto checkEmailCode (
+    public EmailResponseDto checkEmailCode(
             @RequestParam("email") String email,
             @RequestParam("code") String code
     ) {

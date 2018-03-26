@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
+ * 音乐相关接口
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/11 17:01:33
  */
@@ -27,7 +28,7 @@ public class MusicRelatedController extends BaseController {
 
     /**
      * 一键更新音乐播放时长
-     * @return
+     * @return map
      */
     @ApiOperation("一键更新音乐播放时长接口")
     @RequestMapping(value = "/music/service/one/button/to/update/duration/@update", method = RequestMethod.POST)

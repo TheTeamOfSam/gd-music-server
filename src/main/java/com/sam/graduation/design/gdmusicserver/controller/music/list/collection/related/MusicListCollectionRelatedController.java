@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 收藏音乐相关接口
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/20 17:10:14
  */
@@ -40,6 +42,13 @@ public class MusicListCollectionRelatedController extends BaseController {
     @Autowired
     private MusicListCollectionService musicListCollectionService;
 
+    /**
+     * 收藏别的用户创建的歌单的接口
+     *
+     * @param userId          用户id
+     * @param userMusicListId 音乐列表id
+     * @return
+     */
     @ApiOperation("收藏别的用户创建的歌单的接口")
     @RequestMapping(value = "/collect/other/user/music/list/@collect", method = RequestMethod.POST)
     public Map<String, Object> collectOtherUserMusicList(
@@ -82,6 +91,11 @@ public class MusicListCollectionRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 显示收藏别的用户创建的歌单的接口
+     * @param userId 用户id
+     * @return map
+     */
     @ApiOperation("显示收藏别的用户创建的歌单的接口")
     @RequestMapping(value = "/show/collected/other/user/music/list/by/user/id/@query", method = RequestMethod.GET)
     public Map<String, Object> showCollectedOtherUserMusicListByUserId(
@@ -102,6 +116,12 @@ public class MusicListCollectionRelatedController extends BaseController {
         return this.success(userUserMusicListAndMusicInItDtos);
     }
 
+    /**
+     * 取消收藏别的用户创建的歌单的接口
+     * @param userId 用户id
+     * @param userMusicListId 用户音乐列表id
+     * @return map
+     */
     @ApiOperation("取消收藏别的用户创建的歌单的接口")
     @RequestMapping(value = "/un/collect/other/user/music/list/@uncollect", method = RequestMethod.GET)
     public Map<String, Object> unCollectOtherUserMusicList(
@@ -124,7 +144,7 @@ public class MusicListCollectionRelatedController extends BaseController {
         if (messageDto == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
         }
-        if (!messageDto.isSuccess()){
+        if (!messageDto.isSuccess()) {
             return this.error(messageDto.getMessage(), ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
         return this.success(messageDto);

@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户相关接口
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/2/28 17:08:14
  */
@@ -46,7 +48,7 @@ public class UserController extends BaseController {
      *
      * @param headPhoto 传入的图片文件
      * @param userID    用户id
-     * @return
+     * @return map
      */
     @ApiOperation("更改头像接口")
     @RequestMapping(value = "/user/service/head/photo/@change", method = RequestMethod.POST)
@@ -86,7 +88,7 @@ public class UserController extends BaseController {
      * @param rDOfB     出生日期
      * @param rProvince 省份
      * @param rCity     城市
-     * @return
+     * @return map
      */
     @ApiOperation("注册接口")
     @RequestMapping(value = "/user/service/@register", method = RequestMethod.POST)
@@ -159,7 +161,7 @@ public class UserController extends BaseController {
      *
      * @param lEmail    邮箱
      * @param lPassword 密码
-     * @return
+     * @return map
      */
     @ApiOperation("登录接口")
     @RequestMapping(value = "/user/service/@login", method = RequestMethod.POST)
@@ -200,7 +202,7 @@ public class UserController extends BaseController {
      * 获取个人信息
      *
      * @param userID 用户id
-     * @return
+     * @return map
      */
     @ApiOperation("获取个人信息接口")
     @RequestMapping(value = "/user/service/info/@get", method = RequestMethod.POST)
@@ -231,7 +233,7 @@ public class UserController extends BaseController {
      * @param uIntroduction 介绍
      * @param uProvince     省份
      * @param uCity         城市
-     * @return
+     * @return map
      */
     @ApiOperation("个人基础信息修改接口")
     @RequestMapping(value = "/user/service/basic/info/@change", method = RequestMethod.POST)
@@ -296,7 +298,7 @@ public class UserController extends BaseController {
      * @param userId      用户id
      * @param oldPassword 旧密码
      * @param newPassword 新密码
-     * @return
+     * @return map
      */
     @ApiOperation("个人密码修改接口")
     @RequestMapping(value = "/user/service/password/@reset", method = RequestMethod.POST)
@@ -350,7 +352,7 @@ public class UserController extends BaseController {
      * 根据用户名模糊搜索接口
      *
      * @param nickname 用户昵称
-     * @return
+     * @return map
      */
     @ApiOperation("根据用户名模糊搜索接口")
     @RequestMapping(value = "/user/service/find/like/nickname/@query", method = RequestMethod.GET)
@@ -372,6 +374,12 @@ public class UserController extends BaseController {
         return this.success(userDtos);
     }
 
+    /**
+     * 根据用户id获取用户页面的基本信息和歌单数量信息的接口
+     *
+     * @param userId 用户id
+     * @return map
+     */
     @ApiOperation("根据用户id获取用户页面的基本信息和歌单数量信息的接口")
     @RequestMapping(value = "/show/user/page/info/and/num/of/created/and/collected/@query", method = RequestMethod.GET)
     public Map<String, Object> showUserPageInfoAndNumOfCreatedAndCollected(
@@ -392,6 +400,13 @@ public class UserController extends BaseController {
         return this.success(userAndCreatedMLAndCollectedMLDto);
     }
 
+    /**
+     * 重置用户密码接口
+     *
+     * @param email    邮箱号
+     * @param password 密码
+     * @return map
+     */
     @ApiOperation("重置用户密码接口")
     @RequestMapping(value = "/user/service/password/@forget", method = RequestMethod.POST)
     public Map<String, Object> userServiceForgetResetPassword(

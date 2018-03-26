@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * FeignClient 配置
  * @author sam199510 273045049@qq.com
  * @version 创建时间：2018/1/30 12:21:41
  */

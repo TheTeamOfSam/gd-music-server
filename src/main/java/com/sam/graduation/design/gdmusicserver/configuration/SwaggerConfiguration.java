@@ -17,6 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
+ * Swagger UI 配置
  * @author sam199510 273045049@qq.com
  * @version 创建时间：2018/1/29 14:10:57
  */

@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.sam.graduation.design.gdmusicserver.controller.base;
 
 import com.sam.graduation.design.gdmusicserver.constvalue.ServiceResultType;
@@ -21,7 +18,7 @@ import java.util.Map;
 /**
  * Controller接口的基类
  *
- * @author louxinhua
+ * @author sam199510 273045049@qq.com
  */
 public class BaseController {
 
@@ -30,28 +27,28 @@ public class BaseController {
     /**
      * 表示请求是否成功的 key
      *
-     * @author louxinhua
+     * @author sam199510 273045049@qq.com
      */
     public static final String RESULT_ISSUCCESS_KEY = "is_success";
 
     /**
      * 错误码
      *
-     * @author louxinhua
+     * @author sam199510 273045049@qq.com
      */
     public static final String RESULT_ERROR_CODE_KEY = "error_code";
 
     /**
      * 消息 key, 一般用于错误时候的消息提示
      *
-     * @author louxinhua
+     * @author sam199510 273045049@qq.com
      */
     public static final String RESULT_MSG_KEY = "message";
 
     /**
      * 返回的业务数据内容, 值必须是 object.
      *
-     * @author louxinhua
+     * @author sam199510 273045049@qq.com
      */
     public static final String RESULT_DATA_KEY = "result";
 
@@ -244,8 +241,6 @@ public class BaseController {
     }
 
 
-
-
     public String setLoginInfo(Long userid, String ip) {
         //
         // :原来的测试代码
@@ -263,8 +258,6 @@ public class BaseController {
         String encode = AESUtil.encrypt(bToken);
         return encode;
     }
-
-
 
 
 }

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户歌单内歌曲接口相关
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/17 15:48:07
  */
@@ -28,6 +30,13 @@ public class MusicInUserMusicListRelatedController extends BaseController {
     @Autowired
     private MusicInUserMusicListService musicInUserMusicListService;
 
+    /**
+     * 获取我的歌单的单个歌单的歌曲列表接口
+     *
+     * @param userId          用户id
+     * @param userMusicListId 用户音乐列表id
+     * @return
+     */
     @ApiOperation("获取我的歌单的单个歌单的歌曲列表接口")
     @RequestMapping(value = "/get/music/in/user/music/list/@query", method = RequestMethod.GET)
     public Map<String, Object> getMusicInUserMusicList(

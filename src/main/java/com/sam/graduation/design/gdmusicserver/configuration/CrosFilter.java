@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 拦截器配置
  * @author sam199510 273045049@qq.com
  * @version 创建时间：2018/1/29 14:13:38
  */
@@ -15,8 +16,6 @@ public class CrosFilter implements Filter {
 
     @Override
     public void destroy() {
-
-
 
     }
 
@@ -35,8 +34,6 @@ public class CrosFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-
-
 
     }
 

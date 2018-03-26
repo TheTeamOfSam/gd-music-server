@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户歌单相关接口
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/13 19:19:26
  */
@@ -37,6 +39,13 @@ public class UserMusicListRelatedController extends BaseController {
     @Autowired
     private UserMusicListService userMusicListService;
 
+    /**
+     * 用户创建歌单
+     *
+     * @param userId        用户id
+     * @param musicListName 用户歌单名
+     * @return
+     */
     @ApiOperation("用户创建歌单")
     @RequestMapping(value = "/user/music/list/@create", method = RequestMethod.POST)
     public Map<String, Object> userMusicListCreate(
@@ -72,6 +81,12 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 根据用户歌单名查询歌单接口
+     *
+     * @param userMusicListName 用户歌单名
+     * @return map
+     */
     @ApiOperation("根据用户歌单名查询歌单接口")
     @RequestMapping(value = "/find/like/user/music/list/name/@query", method = RequestMethod.GET)
     public Map<String, Object> findLikeUserMusicListName(
@@ -92,6 +107,12 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(userUserMusicListAndMusicInItDtos);
     }
 
+    /**
+     * 根据用户id查找创建的歌单的信息
+     *
+     * @param userID 用户id
+     * @return map
+     */
     @ApiOperation("根据用户id查找创建的歌单的信息")
     @RequestMapping(value = "/find/user/music/list/by/user/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findUserMusicListByUserId(
@@ -112,6 +133,12 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(userUserMusicListAndMusicInItDtos);
     }
 
+    /**
+     * 根据歌单id查询歌单，在前端则展示在编辑歌单页面的接口
+     *
+     * @param userMusicListId 用户音乐列表id
+     * @return map
+     */
     @ApiOperation("根据歌单id查询歌单，在前端则展示在编辑歌单页面的接口")
     @RequestMapping(value = "/find/user/music/list/by/music/list/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findUserMusicListByMusicListId(
@@ -132,6 +159,14 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(userMusicListDto);
     }
 
+    /**
+     * 歌单信息更新接口
+     *
+     * @param userMusicListId    用户歌单id
+     * @param userMusicListName  用户歌单名
+     * @param userMusicListIntro 用户歌单介绍
+     * @return
+     */
     @ApiOperation("歌单信息更新接口")
     @RequestMapping(value = "/update/user/music/list/@update", method = RequestMethod.POST)
     public Map<String, Object> updateUserMusicList(
@@ -169,6 +204,12 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 删除用户歌单接口
+     *
+     * @param userMusidListId 用户歌单id
+     * @return map
+     */
     @ApiOperation("删除用户歌单接口")
     @RequestMapping(value = "/user/music/list/@delete", method = RequestMethod.GET)
     public Map<String, Object> deleteUserMuscList(
@@ -192,6 +233,14 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 添加歌曲接口
+     *
+     * @param userMusicListId 用户歌单id
+     * @param musicId         音乐id
+     * @param userId          用户id
+     * @return
+     */
     @ApiOperation("添加歌曲接口")
     @RequestMapping(value = "/collect/music/into/user/music/list/@collect", method = RequestMethod.POST)
     public Map<String, Object> collectMusicIntoUserMusicList(
@@ -235,6 +284,14 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 删除歌单内某一首歌的接口
+     *
+     * @param userMusicListId 用户歌单id
+     * @param musicId         音乐id
+     * @param userId          用户id
+     * @return map
+     */
     @ApiOperation("删除歌单内某一首歌的接口")
     @RequestMapping(value = "/un/collect/music/into/user/music/list/@uncollect", method = RequestMethod.POST)
     public Map<String, Object> unCollectMusicFromUserMusicList(
@@ -272,10 +329,16 @@ public class UserMusicListRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 显示一个歌单的具体信息的接口
+     *
+     * @param userMusicListId 用户歌单id
+     * @return map
+     */
     @ApiOperation("显示一个歌单的具体信息的接口")
-    @RequestMapping(value = "/show/a/user/music/list/by/user/music/list/id/@query",method = RequestMethod.GET)
+    @RequestMapping(value = "/show/a/user/music/list/by/user/music/list/id/@query", method = RequestMethod.GET)
     public Map<String, Object> showAUserMusicListByUserMusicListId(
-            @RequestParam(value = "user_music_list_id",required = false) Long userMusicListId
+            @RequestParam(value = "user_music_list_id", required = false) Long userMusicListId
     ) {
         if (userMusicListId == null) {
             return this.error("用户歌单id不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
@@ -284,7 +347,7 @@ public class UserMusicListRelatedController extends BaseController {
         try {
             userUserMusicListAndMusicInItDto = this.userMusicListService.findUserMusicListByMusicListId(userMusicListId);
         } catch (Exception e) {
-            logger.error("e:{}",e);
+            logger.error("e:{}", e);
         }
         if (userUserMusicListAndMusicInItDto == null) {
             return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);

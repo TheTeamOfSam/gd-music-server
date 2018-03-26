@@ -1,12 +1,9 @@
-/**
- * 
- */
 package com.sam.graduation.design.gdmusicserver.constvalue;
 
 /**
  * 服务返回结果的code
  * 
- * @author louxinhua
+ * @author sam199510 273045049@qq.com
  *
  */
 public class ServiceResultType {

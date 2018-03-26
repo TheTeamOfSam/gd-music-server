@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 音乐播放列表接口相关
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/22 17:22:17
  */
@@ -27,6 +29,12 @@ public class MusicPlayListRelatedController extends BaseController {
     @Autowired
     private MusicInUserMusicListService musicInUserMusicListService;
 
+    /**
+     * 获取音乐播放列表接口相关
+     *
+     * @param userMusicListId 用户音乐列表id
+     * @return map
+     */
     @ApiOperation("获取音乐播放列表接口相关")
     @RequestMapping(value = "/get/music/play/list/@query", method = RequestMethod.GET)
     public Map<String, Object> getMusicPlayList(

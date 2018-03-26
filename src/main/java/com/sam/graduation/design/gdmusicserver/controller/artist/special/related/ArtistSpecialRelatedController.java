@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 艺人专辑相关接口
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/18 13:20:02
  */
@@ -30,6 +31,11 @@ public class ArtistSpecialRelatedController extends BaseController {
     @Autowired
     private SpecialService specialService;
 
+    /**
+     * 获取对应艺人专辑的接口
+     * @param artistId 艺人id
+     * @return map
+     */
     @ApiOperation("获取对应艺人专辑的接口")
     @RequestMapping(value = "/find/specials/by/artist/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findSpecialsByArtistId(
@@ -50,6 +56,11 @@ public class ArtistSpecialRelatedController extends BaseController {
         return this.success(specialDtos);
     }
 
+    /**
+     * 根据专辑id查找专辑接口
+     * @param specialId 专辑id
+     * @return map
+     */
     @ApiOperation("根据专辑id查找专辑接口")
     @RequestMapping(value = "/find/special/by/special/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findSpecialBySpecialId(
@@ -70,6 +81,11 @@ public class ArtistSpecialRelatedController extends BaseController {
         return this.success(artistSpecialAndNumOfMusicInSpecialDto);
     }
 
+    /**
+     * 根据专辑id获取专辑内歌曲列表的接口
+     * @param specialId 专辑id
+     * @return map
+     */
     @ApiOperation("根据专辑id获取专辑内歌曲列表的接口")
     @RequestMapping(value = "/find/music/in/special/by/special/id/@query", method = RequestMethod.GET)
     public Map<String, Object> findMusicInSpecialBySpecialId(

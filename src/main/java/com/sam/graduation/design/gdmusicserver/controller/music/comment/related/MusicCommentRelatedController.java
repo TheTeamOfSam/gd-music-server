@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 音乐评论相关接口
+ *
  * @author sam199510 273045049@qq.com
  * @version Created Time:2018/3/18 16:59:49
  */
@@ -31,6 +33,14 @@ public class MusicCommentRelatedController extends BaseController {
     @Autowired
     private MusicCommentService musicCommentService;
 
+    /**
+     * 音乐评论接口
+     *
+     * @param userId         用户id
+     * @param musicId        音乐id
+     * @param commentContent 用户评论内容
+     * @return map
+     */
     @ApiOperation("音乐评论接口")
     @RequestMapping(value = "/comment/music/@comment", method = RequestMethod.POST)
     public Map<String, Object> commentMusic(
@@ -72,6 +82,13 @@ public class MusicCommentRelatedController extends BaseController {
     }
 
 
+    /**
+     * 音乐评论显示相关接口
+     *
+     * @param userId  用户id
+     * @param musicId 音乐id
+     * @return map
+     */
     @ApiOperation("音乐评论显示相关接口")
     @RequestMapping(value = "/get/music/comment/by/music/id/or/user/id/@query", method = RequestMethod.GET)
     public Map<String, Object> getMusicCommentByMusicIdOrUserId(
@@ -93,6 +110,13 @@ public class MusicCommentRelatedController extends BaseController {
         return this.success(userMusicCommentAndLCDtos);
     }
 
+    /**
+     * 音乐评论点赞接口
+     *
+     * @param musicCommentId 音乐评论id
+     * @param userId         用户id
+     * @return map
+     */
     @ApiOperation("音乐评论点赞接口")
     @RequestMapping(value = "/like/music/comment/@like", method = RequestMethod.POST)
     public Map<String, Object> likeMusicComment(
@@ -120,7 +144,13 @@ public class MusicCommentRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
-
+    /**
+     * 音乐评论取消点赞接口
+     *
+     * @param musicCommentId 音乐评论id
+     * @param userId         用户id
+     * @return map
+     */
     @ApiOperation("音乐评论取消点赞接口")
     @RequestMapping(value = "/un/like/music/comment/@unlike", method = RequestMethod.POST)
     public Map<String, Object> unLikeMusicComment(
@@ -148,6 +178,12 @@ public class MusicCommentRelatedController extends BaseController {
         return this.success(messageDto);
     }
 
+    /**
+     * 删除音乐评论接口
+     *
+     * @param musicCommentId 评论id
+     * @return map
+     */
     @ApiOperation("删除音乐评论接口")
     @RequestMapping(value = "/delete/music/comment/@delete", method = RequestMethod.POST)
     public Map<String, Object> deleteMusicComment(
