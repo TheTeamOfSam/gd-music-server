@@ -1,6 +1,7 @@
 package com.sam.graduation.design.gdmusicserver.service.artist;
 
 import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistDto;
+import com.sam.graduation.design.gdmusicserver.controller.dto.ArtistSpecialMusicDto;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface ArtistService {
 
-    List<ArtistDto> findLikeArtistName(String artistName);
+    List<ArtistSpecialMusicDto> findLikeArtistName(String artistName);
 
     ArtistDto findByArtistId(Long artistId);
 

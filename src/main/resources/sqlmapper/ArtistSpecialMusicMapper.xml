@@ -41,11 +41,80 @@
           WHERE a.id = s.artist_id
           AND s.id = m.special_id
         ) asm
-        <if test="music_name != null">
+        <if test="music_name != null and music_name != ''">
             WHERE asm.music_name LIKE CONCAT('%',#{music_name,jdbcType=VARCHAR},'%')
             OR asm.special_name LIKE CONCAT('%',#{music_name,jdbcType=VARCHAR},'%')
             OR asm.artist_name LIKE CONCAT('%',#{music_name,jdbcType=VARCHAR},'%')
         </if>
+    </select>
+    <select id="selectLikeArtistName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT *
+        FROM (
+              SELECT
+                asm.artist_id,
+                asm.artist_name,
+                artist_head_photo_small
+              FROM (SELECT
+                      a.id                      AS artist_id,
+                      a.artist_name             AS artist_name,
+                      a.artist_other_name       AS artist_other_name,
+                      a.intro                   AS artist_intro,
+                      a.artist_head_photo_big   AS artist_head_photo_big,
+                      a.artist_head_photo_small AS artist_head_photo_small,
+                      s.id                      AS special_id,
+                      s.special_name            AS special_name,
+                      s.publish_company         AS special_publish_company,
+                      s.publish_time            AS special_publish_time,
+                      s.special_photo           AS special_photo,
+                      m.id                      AS music_id,
+                      m.music_name              AS music_name,
+                      m.music_path              AS music_path,
+                      m.music_duration          AS music_duration
+                    FROM artist a, special s, music m
+                    WHERE a.id = s.artist_id
+                          AND s.id = m.special_id) asm
+                    <if test="artist_name != null and artist_name != ''">
+                        WHERE asm.music_name LIKE CONCAT('%',#{artist_name,jdbcType=VARCHAR},'%')
+                        OR asm.special_name LIKE CONCAT('%',#{artist_name,jdbcType=VARCHAR},'%')
+                        OR asm.artist_name LIKE CONCAT('%',#{artist_name,jdbcType=VARCHAR},'%')
+                    </if>
+                    ) aassmm
+        GROUP BY aassmm.artist_id
+    </select>
+    <select id="selectLikeSpecialName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT *
+        FROM (SELECT
+                asm.artist_id,
+                asm.artist_name,
+                asm.special_name,
+                asm.special_id,
+                asm.special_photo
+              FROM (SELECT
+                      a.id                      AS artist_id,
+                      a.artist_name             AS artist_name,
+                      a.artist_other_name       AS artist_other_name,
+                      a.intro                   AS artist_intro,
+                      a.artist_head_photo_big   AS artist_head_photo_big,
+                      a.artist_head_photo_small AS artist_head_photo_small,
+                      s.id                      AS special_id,
+                      s.special_name            AS special_name,
+                      s.publish_company         AS special_publish_company,
+                      s.publish_time            AS special_publish_time,
+                      s.special_photo           AS special_photo,
+                      m.id                      AS music_id,
+                      m.music_name              AS music_name,
+                      m.music_path              AS music_path,
+                      m.music_duration          AS music_duration
+                    FROM artist a, special s, music m
+                    WHERE a.id = s.artist_id
+                          AND s.id = m.special_id) asm
+                <if test="special_name != null and special_name != ''">
+                    WHERE asm.music_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
+                    OR asm.special_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
+                    OR asm.artist_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
+                </if>
+                ) aassmm
+        GROUP BY aassmm.special_id
     </select>
     <select id="selectMyMusicList" parameterType="java.util.Map" resultMap="BaseResultMap">
       SELECT

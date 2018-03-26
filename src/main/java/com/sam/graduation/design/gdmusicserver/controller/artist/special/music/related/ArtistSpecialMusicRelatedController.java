@@ -79,7 +79,7 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         if (StringUtils.isBlank(artistName)) {
             return this.error("歌手名不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        List<ArtistDto> artistDtos = null;
+        List<ArtistSpecialMusicDto> artistDtos = null;
         try {
             artistDtos = this.artistService.findLikeArtistName(artistName);
         } catch (Exception e) {
@@ -104,9 +104,9 @@ public class ArtistSpecialMusicRelatedController extends BaseController {
         if (StringUtils.isBlank(specialName)) {
             return this.error("专辑名不能为空", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
         }
-        List<ArtistSpecialDto> artistSpecialDtos = null;
+        List<ArtistSpecialMusicDto> artistSpecialDtos = null;
         try {
-            artistSpecialDtos = this.specialService.findASLikeSpecialName(specialName);
+            artistSpecialDtos = this.specialService.findLikeSpecialName(specialName);
         } catch (Exception e) {
             logger.error("e:{}", e);
         }

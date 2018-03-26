@@ -15,6 +15,14 @@ public interface ArtistSpecialMusicMapper {
             @Param("music_name") String musicName
     );
 
+    List<ArtistSpecialMusic> selectLikeArtistName(
+            @Param("artist_name") String artistName
+    );
+
+    List<ArtistSpecialMusic> selectLikeSpecialName(
+            @Param("special_name") String specialName
+    );
+
     List<ArtistSpecialMusic> selectMyMusicList(
             @Param("user_id") Long userId,
             @Param("user_music_list_id") Long userMusicListId

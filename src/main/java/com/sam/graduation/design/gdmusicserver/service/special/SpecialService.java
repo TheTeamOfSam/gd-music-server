@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface SpecialService {
 
-    List<SpecialDto> findLikeSpecialName(String specialName);
+    List<ArtistSpecialMusicDto> findLikeSpecialName(String specialName);
 
     List<ArtistSpecialDto> findASLikeSpecialName(String specialName);
 

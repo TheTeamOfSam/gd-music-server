@@ -40,22 +40,22 @@ public class SpecialServiceImpl extends BaseService implements SpecialService {
     private ArtistSpecialAndNumOfMusicInSpecialMapper artistSpecialAndNumOfMusicInSpecialMapper;
 
     @Override
-    public List<SpecialDto> findLikeSpecialName(String specialName) {
-        List<SpecialDto> specialDtos = null;
+    public List<ArtistSpecialMusicDto> findLikeSpecialName(String specialName) {
+        List<ArtistSpecialMusicDto> specialDtos = null;
 
-        List<Special> specials = null;
+        List<ArtistSpecialMusic> specials = null;
         try {
-            specials = this.specialMapper.selectLikeSpecialName(specialName);
+            specials = this.artistSpecialMusicMapper.selectLikeSpecialName(specialName);
         } catch (Exception e) {
             logger.error("e:{}", e);
         }
         if (specials == null) {
-            specialDtos = new ArrayList<SpecialDto>();
+            specialDtos = new ArrayList<ArtistSpecialMusicDto>();
             return specialDtos;
         }
-        specialDtos = new ArrayList<SpecialDto>();
-        for (Special spc : specials) {
-            SpecialDto specialDto = new SpecialDto();
+        specialDtos = new ArrayList<ArtistSpecialMusicDto>();
+        for (ArtistSpecialMusic spc : specials) {
+            ArtistSpecialMusicDto specialDto = new ArtistSpecialMusicDto();
             specialDto.from(spc);
             specialDtos.add(specialDto);
         }
