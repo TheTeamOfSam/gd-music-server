@@ -64,3 +64,4 @@ target/test-classes/com/sam/graduation/design/gdmusicserver/GdMusicServerApplica
 gd-music-server.iml
 .classpath
 .project
+mvnw
