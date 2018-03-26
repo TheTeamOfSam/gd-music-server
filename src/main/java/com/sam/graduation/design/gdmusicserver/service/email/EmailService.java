@@ -11,6 +11,8 @@ public interface EmailService {
 
     EmailResponseDto sendEmailCode(@RequestParam("email") String email);
 
+    EmailResponseDto sendResetPasswordEmailCode(@RequestParam("email") String email);
+
     EmailResponseDto checkEmailCode(@RequestParam("email") String email, @RequestParam("code") String code);
 
 }

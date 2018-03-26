@@ -28,7 +28,7 @@ public class EmailController extends BaseController {
     @Autowired
     private EmailService emailService;
 
-    @ApiOperation("邮箱feign获取测试接口")
+    @ApiOperation("注册的邮箱feign获取测试接口")
     @RequestMapping(value = "/email/@get", method = RequestMethod.POST)
     public EmailResponseDto getEmailCode(
             @RequestParam("email") String email
@@ -48,7 +48,27 @@ public class EmailController extends BaseController {
         return this.emailService.sendEmailCode(email);
     }
 
-    @ApiOperation("邮箱feign验证测试接口")
+    @ApiOperation("重置密码的邮箱发送接口")
+    @RequestMapping(value = "/reset/password/email/@get", method = RequestMethod.POST)
+    public EmailResponseDto getResetPasswordEmailCode(
+            @RequestParam(value = "email",required = false) String email
+    ){
+        if (StringUtils.isBlank(email)) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setSuccess(false);
+            dto.setFeedbackMessage("亲，请输入邮箱账号！");
+            return dto;
+        }
+        if (this.userMapper.selectByEmail(email) == null) {
+            EmailResponseDto dto = new EmailResponseDto();
+            dto.setSuccess(false);
+            dto.setFeedbackMessage("亲，账号不存在！");
+            return dto;
+        }
+        return this.emailService.sendResetPasswordEmailCode(email);
+    }
+
+    @ApiOperation("注册的邮箱feign验证测试接口")
     @RequestMapping(value = "/email/@check", method = RequestMethod.POST)
     public EmailResponseDto checkEmailCode(
             @RequestParam("email") String email,

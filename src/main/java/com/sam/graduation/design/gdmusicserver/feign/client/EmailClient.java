@@ -18,6 +18,10 @@ public interface EmailClient {
     @RequestMapping(value = "/gdemailserver/email/code/@send", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     EmailResponseDto sendEmailCode(@RequestParam("email") String email);
 
+    // 重置密码的邮箱验证码
+    @RequestMapping(value = "/gdemailserver/reset/password/email/code/@send", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    EmailResponseDto resetPasswordEmailCodeSend(@RequestParam("email") String email);
+
     // 验证短信验证码
     @RequestMapping(value = "/gdemailserver/email/code/@check", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     EmailResponseDto checkEmailCode(@RequestParam("email") String email, @RequestParam("code") String code);

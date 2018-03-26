@@ -392,4 +392,37 @@ public class UserController extends BaseController {
         return this.success(userAndCreatedMLAndCollectedMLDto);
     }
 
+    @ApiOperation("重置用户密码接口")
+    @RequestMapping(value = "/user/service/password/@forget", method = RequestMethod.POST)
+    public Map<String, Object> userServiceForgetResetPassword(
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "password", required = false) String password
+    ) {
+        if (StringUtils.isBlank(email)) {
+            return this.error("邮箱账号不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        if (StringUtils.isBlank(password)) {
+            return this.error("亲，密码不能为空！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        // 查询账号
+        User user = this.userMapper.selectByEmail(email);
+        if (user == null) {
+            return this.error("亲，账号不存在！", ServiceResultType.RESULT_TYPE_SERVICE_ERROR);
+        }
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setPassword(ConfusionUtil.pwToMD5(password, user.getId()));
+
+        UserDto userDtoUpdate = null;
+        try {
+            userDtoUpdate = this.userService.userInfoUpdate(userDto);
+        } catch (Exception e) {
+            logger.error("e:{}", e);
+        }
+        if (userDtoUpdate == null) {
+            return this.error("系统异常", ServiceResultType.RESULT_TYPE_SYSTEM_ERROR);
+        }
+        return this.success(userDtoUpdate);
+    }
+
 }

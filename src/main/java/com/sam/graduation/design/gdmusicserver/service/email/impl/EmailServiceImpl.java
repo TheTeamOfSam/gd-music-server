@@ -25,6 +25,13 @@ public class EmailServiceImpl extends BaseService implements EmailService {
     }
 
     @Override
+    public EmailResponseDto sendResetPasswordEmailCode(String email) {
+        EmailResponseDto dto = this.emailClient.resetPasswordEmailCodeSend(email);
+        dto.setCode(null);
+        return dto;
+    }
+
+    @Override
     public EmailResponseDto checkEmailCode(String email, String code) {
         EmailResponseDto dto = this.emailClient.checkEmailCode(email, code);
         return dto;
