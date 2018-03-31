@@ -105,7 +105,7 @@
               ) all_user_music_list
         WHERE usr.id = mlc.user_id
         AND mlc.user_music_list_id = all_user_music_list.user_music_list_id
-        <if test="user_id != null">
+        <if test="user_id != null and user_id != ''">
             AND usr.id = #{user_id,jdbcType=BIGINT}
         </if>
     </select>
