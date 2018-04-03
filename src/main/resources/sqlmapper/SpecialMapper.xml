@@ -142,7 +142,7 @@
   <select id="selectLikeSpecialName" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT *
     FROM special
-    <if test="special_name != null">
+    <if test="special_name != null and special_name != ''">
       WHERE special_name LIKE CONCAT('%',#{special_name,jdbcType=VARCHAR},'%')
     </if>
   </select>
