@@ -2,40 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sam.graduation.design.gdmusicserver.dao.UserMusicCommentAndLCMapper">
     <resultMap id="BaseResultMap" type="com.sam.graduation.design.gdmusicserver.model.pojo.UserMusicCommentAndLC">
-        <result column="user_id" jdbcType="BIGINT" property="userId" />
-        <result column="user_head_photo" jdbcType="VARCHAR" property="userHeadPhoto" />
-        <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
-        <result column="music_comment_id" jdbcType="BIGINT" property="musicCommentId" />
-        <result column="music_comment_content" jdbcType="VARCHAR" property="musicCommentContent" />
-        <result column="music_comment_time" jdbcType="TIMESTAMP" property="musicCommentTime" />
-        <result column="num_of_like_comment_of_music" jdbcType="INTEGER" property="numOfLikeCommentOfMusic" />
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_head_photo" jdbcType="VARCHAR" property="userHeadPhoto"/>
+        <result column="user_nickname" jdbcType="VARCHAR" property="userNickname"/>
+        <result column="music_comment_id" jdbcType="BIGINT" property="musicCommentId"/>
+        <result column="music_comment_content" jdbcType="VARCHAR" property="musicCommentContent"/>
+        <result column="music_comment_time" jdbcType="TIMESTAMP" property="musicCommentTime"/>
+        <result column="num_of_like_comment_of_music" jdbcType="INTEGER" property="numOfLikeCommentOfMusic"/>
     </resultMap>
     <select id="selectMusicCommentByMusicId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-          u.id                     AS user_id,
-          u.head_photo             AS user_head_photo,
-          u.nickname               AS user_nickname,
-          mc.id                    AS music_comment_id,
-          mc.comment_content       AS music_comment_content,
-          mc.comment_time          AS music_comment_time,
-          mclc.num_of_like_comment AS num_of_like_comment_of_music
+          *
         FROM
-          user u,
-          music m,
-          music_comment mc,
-          (SELECT
-             mc.id                                              AS music_comment_id,
-             mc.user_id                                         AS music_comment_user_id,
-             mc.music_id                                        AS music_comment_music_id,
-             count(CASE WHEN lc.user_id IS NOT NULL THEN 1 END) AS num_of_like_comment
-           FROM music_comment mc LEFT JOIN like_comment lc ON mc.id = lc.comment_id
-           GROUP BY mc.id) mclc
-        WHERE m.id = mc.music_id
-        AND mc.id = mclc.music_comment_id
-        AND u.id = mc.user_id
-        <if test="music_id != null">
+        (
+          SELECT
+            u.id AS user_id,
+            u.head_photo AS user_head_photo,
+            u.nickname AS user_nickname,
+            mc.id AS music_comment_id,
+            mc.comment_content AS music_comment_content,
+            mc.comment_time AS music_comment_time,
+            mclc.num_of_like_comment AS num_of_like_comment_of_music
+          FROM
+            user u,
+            music m,
+            music_comment mc,
+            (
+              SELECT
+                mc.id AS music_comment_id,
+                mc.user_id AS music_comment_user_id,
+                mc.music_id AS music_comment_music_id,
+                count(CASE WHEN lc.user_id IS NOT NULL THEN 1 END) AS num_of_like_comment
+                FROM music_comment mc LEFT JOIN like_comment lc ON mc.id = lc.comment_id
+                GROUP BY mc.id
+            ) mclc
+          WHERE m.id = mc.music_id
+          AND mc.id = mclc.music_comment_id
+          AND u.id = mc.user_id
+          <if test="music_id != null">
             AND m.id = #{music_id,jdbcType=BIGINT}
-        </if>
-        ORDER BY mc.comment_time DESC;
+          </if>
+          ORDER BY mc.comment_time DESC
+        ) umcmclc
+        ORDER BY umcmclc.num_of_like_comment_of_music DESC
     </select>
 </mapper>
